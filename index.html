@@ -1,0 +1,144 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/jquery.timepicker.min.css">
+    </head>
+
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <div class="container">
+            <h3>Connected Worlds HDP Visualization</h3>
+
+            <table>
+                <thead>
+                    <td><h2>Controls:</h2></td>
+                    <td><h2>Video:</h2></td>
+                    <td><h2>Detailed View:</h2></td>
+                </thead>
+                <tr id="top_row">
+
+                    <td id="controls">
+
+                        <table class="controls" style="font-size: 10px;">
+                            <thead style="font-weight: bold;">
+                                <tr>
+                                    <td></td>
+                                    <td colspan="4" style="text-align: center">Biomes</td>
+                                </tr>
+                                <tr>
+                                    <td>Attribute</td>
+                                    <td>Desert</td>
+                                    <td>Plains</td>
+                                    <td>Jungle</td>
+                                    <td>Wetlands</td>
+                                </tr>
+                            </thead>
+                            <tbody style="vertical-align: bottom;">
+                                <tr>
+                                    <td>Plants LV1</td>
+                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_1"></td>
+                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_1"></td>
+                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_1"></td>
+                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_1"></td>
+                                </tr>
+                                <tr>
+                                    <td>Plants LV2</td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_2"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_2"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_2"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_2"></td>
+                                </tr>
+                                <tr>
+                                    <td>Plants LV3</td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_3"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_3"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_3"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_3"></td>
+                                </tr>
+                                <tr>
+                                    <td>Plants LV4</td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_4"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_4"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_4"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_4"></td>
+                                </tr>
+                                <tr>
+                                    <td>All</td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_desert"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_plains"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_jungle"></td>
+                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_wetlands"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                    <td id="video">
+                        <video id="globalView" controls seekable autoplay>
+                            <source src="./data/test5.mp4" type="video/mp4">
+                        </video>
+                    </td>
+                    <td id="detailed_information">
+                        <h3>Detailed Water View:</h3>
+                        <div id="zoomed_chart" align="left" style="height: 40%"></div>
+                        <h3>Detailed Plants View:</h3>
+                        <div id="plants_chart" align="left" style="height: 40%"></div>
+                    </td>
+                </tr>
+                <tr id="bottom_row">
+                    <td>
+                    </td>
+                    <td id="full_chart"><h2>Session View:</h2></td>
+                    <td>
+                        <h3>Regime Description:</h3>
+                        <div id="ranking" style="height: 50%">
+                            <div style="height: 50%">
+                                <h5>Top Biomes Receiving Water:</h5>
+                                <ol id="top_biomes" style="font-size: 14px"></ol>
+                            </div>
+                            <div style="height: 50%">
+                                <h5>Top Biomes Losing Water:</h5>
+                                <ol id="bottom_biomes" style="font-size: 14px"></ol>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div id="wrapper">
+            </div>
+
+            <!--<div id="chart" align="left"></div>-->
+
+            <div id="water_levels">
+            </div>
+        </div>
+
+
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <!--<script src="./js/jquery.timepicker.min.js"></script>-->
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="js/renderLineChart.js"></script>
+        <script src="js/main.js"></script>
+
+    </body>
+</html>
