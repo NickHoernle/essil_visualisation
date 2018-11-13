@@ -29,7 +29,7 @@ class LineChart  {
             else if (text.match(/^wetlands.*/i) != null) { return colors[3]; }
             else {return 'Black';}
         };
-        var element = element;
+        this.element = element;
 
         this.x = d3.scaleTime().range([0, this.width]);
         this.y = d3.scaleLinear().range([this.height, 0]);
@@ -79,6 +79,10 @@ class LineChart  {
             .attr("d", val_line(data));
     }
 
+    set_ymax (BIOMES) {
+        this.ymax = d3.max(this.data, function(d) { return 1.1*d3.max(BIOMES.map(function(biome) { return d[biome]; })) } );
+    }
+
     plotBiomes (BIOMES, start=null, stop=null) {
 
         var data = null;
@@ -93,7 +97,8 @@ class LineChart  {
                 }
             }, this);
 
-            this.ymax = d3.max(data, function(d) { return 1.1*d3.max(BIOMES.map(function(biome) { return d[biome]; })) } );
+            this.set_ymax(BIOMES);
+            // this.ymax = d3.max(data, function(d) { return 1.1*d3.max(BIOMES.map(function(biome) { return d[biome]; })) } );
             this.ymin = 0;
 
             this.x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -273,6 +278,16 @@ class LineChart  {
 
     plotInterval (start, stop) {
         alert('Hello World! -' + _args[0]);
+    }
+
+    attachTimeClickHandler (callback, charts) {
+        var dte = new Date(2014, 4, 1);
+        var offset = $(this.element).offset().left + this.margin.left;
+        var x_axis = this.x;
+        d3.select(this.element).on('click', function(){
+            var selected_seconds = (x_axis.invert(d3.event.pageX - offset) - dte)/1000;
+            callback(selected_seconds, charts);
+        });
     }
 
 };

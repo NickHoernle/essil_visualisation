@@ -29,7 +29,7 @@ var fix_seconds = [];
 var seen = [];
 var zoomedChart = null;
 var mainChart = null;
-var plants = null;
+var plantsChart = null;
 
 d3.csv("data/test5_res.csv", function(error, data) {
 
@@ -110,10 +110,31 @@ d3.csv("data/test5_res.csv", function(error, data) {
         element = '#plants_chart'
     );
     plantsChart.plotLegend( getActivePlants() );
+
+    // attach the click handlers:
+    var array_flipped={};
+    $.each(fix_seconds, function(i, el) {
+        array_flipped[el]=parseInt(i);
+    });
+    var data = [array_flipped];
+    mainChart.attachTimeClickHandler(updateVidTime, data);
+    zoomedChart.attachTimeClickHandler(updateVidTime, data);
+    plantsChart.attachTimeClickHandler(updateVidTime, data);
 });
 
-vid.ontimeupdate = function() {
-    var time = fix_seconds[parseInt(vid.currentTime)];
+function updateVidTime(time, data) {
+    var vid = document.getElementById("globalView");
+    var array_flipped = data[0];
+    var sec = parseInt(time);
+    while (!(sec in array_flipped)) {
+        sec = sec + 1;
+    }
+    vid.pause();
+    vid.currentTime = array_flipped[sec];
+    vid.play();
+}
+
+function updateCharts(time) {
 
     if (time <= 1) {
         waterLevelsAndPeriods.forEach(function(x) {
@@ -121,7 +142,6 @@ vid.ontimeupdate = function() {
             mainChart.plotActiveRegions(time, false);
         });
     }
-    // var stop = start + 70;
 
     zoomedChart.plotBiomes(BIOMES, time-30, time+70);
     plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
@@ -145,7 +165,11 @@ vid.ontimeupdate = function() {
     waterLevelsAndPeriods[time].bottom.forEach( function(x) {
         $('#bottom_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
     });
+}
 
+vid.ontimeupdate = function() {
+    var time = fix_seconds[parseInt(vid.currentTime)];
+    updateCharts(time);
 };
 
 /* Plotting controls*/
