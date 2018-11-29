@@ -87,10 +87,19 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <hr />
+
+                        <center>
+                            <p id='time'>Video Time: 00:00</p>
+                            <button type="button" class="btn btn-default btn-sm" id="play-pause" playing='true'>
+                                <span class="glyphicon glyphicon-pause"></span> Pause
+                            </button>
+                        </center>
+                        <hr />
                     </td>
 
                     <td id="video">
-                        <video id="globalView" controls autoplay preload="none">
+                        <video id="globalView" autoplay="autoplay">
                             <source src="https://s3.amazonaws.com/essil-hdp/videos/test5.mp4" type="video/mp4">
                         </video>
                     </td>

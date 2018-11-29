@@ -30,6 +30,21 @@ var seen = [];
 var zoomedChart = null;
 var mainChart = null;
 var plantsChart = null;
+var plotted_main_periods = false;
+
+function pad(value) {
+    if(value < 10) {
+        return '0' + value;
+    } else {
+        return value;
+    }
+}
+
+function get_time_string(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var sec = seconds - minutes * 60
+    return pad(minutes) + ':' + pad(sec);
+}
 
 d3.csv("data/test5_res.csv", function(error, data) {
 
@@ -129,26 +144,27 @@ function updateVidTime(time, data) {
     while (!(sec in array_flipped)) {
         sec = sec + 1;
     }
-    vid.pause();
+    pause_vid();
     vid.currentTime = array_flipped[sec];
-    vid.play();
+    play_vid();
 }
 
 function updateCharts(time) {
 
-    if (time <= 1) {
+    if ((time <= 1) | (plotted_main_periods == false)) {
         waterLevelsAndPeriods.forEach(function(x) {
             var time = x.seconds;
             mainChart.plotActiveRegions(time, false);
         });
+        plotted_main_periods = true;
     }
 
     zoomedChart.plotBiomes(BIOMES, time-30, time+70);
     plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
 
-    mainChart.plotTimeTracker(time+1);
-    zoomedChart.plotTimeTracker(time+1);
-    plantsChart.plotTimeTracker(time+1);
+    mainChart.plotTimeTracker(time);
+    zoomedChart.plotTimeTracker(time);
+    plantsChart.plotTimeTracker(time);
 
     zoomedChart.plotActiveRegions(time, true);
     plantsChart.plotActiveRegions(time, true);
@@ -168,8 +184,9 @@ function updateCharts(time) {
 }
 
 vid.ontimeupdate = function() {
-    var time = fix_seconds[parseInt(vid.currentTime)];
+    var time = fix_seconds[parseInt(vid.currentTime)]+1;
     updateCharts(time);
+    $('#time').text('Video Time: ' + get_time_string(time))
 };
 
 /* Plotting controls*/
@@ -244,4 +261,28 @@ $(document).keydown(function(e) {
 
 $('#globalView').click(function() {
     this.paused ? this.play() : this.pause();
+});
+
+function pause_vid() {
+    var global_view = $('#globalView')[0];
+    $('#play-pause')[0].setAttribute('playing', 'false');
+    $('#play-pause').html("<span class='glyphicon glyphicon-play'></span> Play");
+    global_view.pause();
+}
+
+function play_vid() {
+    var global_view = $('#globalView')[0];
+    $('#play-pause')[0].setAttribute('playing', 'true');
+    $('#play-pause').html("<span class='glyphicon glyphicon-pause'></span> Pause");
+    global_view.play();
+}
+
+$('#play-pause').click(function() {
+    var playing = this.getAttribute('playing');
+    if (playing == 'true') {
+        pause_vid();
+    }
+    else {
+        play_vid();
+    }
 });

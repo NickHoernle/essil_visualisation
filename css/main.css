@@ -75,15 +75,25 @@ table #detailed_information {
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
+#time {
+    font-size: large;
+}
+
 .area {
-    fill: #de79c2;
+    fill: #de55dc;
+    opacity: 0.4;
+    outline-color: rgba(255, 0, 202, 0.4);;
+}
+
+.area_not_important {
+    fill: #de86dc;
     opacity: 0.2;
     outline-color: rgba(255, 0, 202, 0.4);;
 }
 
 .area_view_window {
-    fill: #b0c4de;
-    opacity: 0.2;
+    fill: #8bdeda;
+    opacity: 0.4;
 }
 
 div.tooltip {

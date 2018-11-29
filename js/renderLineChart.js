@@ -143,12 +143,11 @@ class LineChart  {
             return newD
         });
 
-        if (moving == true) {
-            this.plotActiveRegion(ixs, true, area_start);
+        if (this.data[start]['important'] == true) {
+            this.plotActiveRegion(ixs, moving, area_start);
         } else {
-            if (this.data[start]['important'] == true) {
-                this.plotActiveRegion(ixs, false, area_start);
-            }
+            var a_s = area_start == 0 ? 1 : area_start;
+            this.plotActiveRegion(ixs, moving, a_s, '_not_important');
         }
     }
 
@@ -246,7 +245,7 @@ class LineChart  {
     plotTimeTracker (seconds) {
 
         // we update the position of this line
-        var time_tracker = this.svg.select('.time_tracker')._groups[0][0]
+        this.svg.select('.time_tracker').remove();
 
         var dte = new Date(2014, 4, 1);
         var u = +dte;
@@ -255,25 +254,16 @@ class LineChart  {
 
         var x = this.x
 
-        if (time_tracker == null) {
-
-            this.svg.append("line")
-                .attr("x1", x(newD))  //<<== change your code here
-                .attr("y1", this.height)
-                .attr("x2", x(newD))  //<<== and here
-                .attr("y2", this.ymin)
-                .attr('class', 'time_tracker')
-                .attr("transform", null)
-                .style("stroke-width", 3)
-                .style("stroke", "black")
-                .style("fill", "none");
-
-        } else {
-            // move the line
-            d3.select(time_tracker)
-                .attr("transform", "translate(" + x(newD) + ",0)")
-                .transition()
-        }
+        this.svg.append("line")
+            .attr("x1", x(newD))  //<<== change your code here
+            .attr("y1", this.height)
+            .attr("x2", x(newD))  //<<== and here
+            .attr("y2", this.ymin)
+            .attr('class', 'time_tracker')
+            .attr("transform", null)
+            .style("stroke-width", 3)
+            .style("stroke", "black")
+            .style("fill", "none");
     }
 
     plotInterval (start, stop) {
