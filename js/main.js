@@ -146,7 +146,6 @@ function updateVidTime(time, data) {
     }
     pause_vid();
     vid.currentTime = array_flipped[sec];
-    play_vid();
 }
 
 function updateCharts(time) {
@@ -260,7 +259,7 @@ $(document).keydown(function(e) {
 });
 
 $('#globalView').click(function() {
-    this.paused ? this.play() : this.pause();
+    this.paused ? play_vid() : pause_vid();
 });
 
 function pause_vid() {
