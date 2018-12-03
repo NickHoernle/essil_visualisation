@@ -46,7 +46,7 @@ function get_time_string(seconds) {
     return pad(minutes) + ':' + pad(sec);
 }
 
-d3.csv("data/test5_res.csv", function(error, data) {
+d3.csv("data/input_file.csv", function(error, data) {
 
     var mapped_data = data.map(function(d) {
         var dte = new Date(2014, 4, 1);
