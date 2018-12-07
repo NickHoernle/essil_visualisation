@@ -1,7 +1,7 @@
 var BIOMES = ['Desert_Water', 'Plains_Water', 'Jungle_Water', 'Wetlands_Water']
 var PLANTS = ['Desert_Plants', 'Plains_Plants', 'Jungle_Plants', 'Wetlands_Plants']
 var LEVELS = ['lv1', 'lv2', 'lv3', 'lv4']
-var COLORS = ['green', 'blue', 'red', 'purple'];
+var COLORS = ['blue', 'red', 'purple', 'cyan'];
 
 
 /*

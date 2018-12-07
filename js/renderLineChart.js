@@ -57,8 +57,7 @@ class LineChart  {
 
         // add the Y Axis
         this.svg.append("g")
-            .call(d3.axisLeft(this.y)
-                .ticks(5));
+            .call(d3.axisLeft(this.y).ticks(parseInt(height/25)));
     }
 
     lineStyle (biome) {
@@ -119,7 +118,7 @@ class LineChart  {
 
             // add the Y Axis
             this.svg.append("g")
-                .call(d3.axisLeft(this.y));
+                .call(d3.axisLeft(this.y).ticks(parseInt(height/25)));
 
         } else {
             data = this.data;
@@ -201,7 +200,7 @@ class LineChart  {
 
         var legendRectHeight = 10;
         var legendRectWidth = 60;
-        var legendSpacing = 10;
+        var legendSpacing = 55;
         var colors = this.colors;
 
         this.svg.selectAll('.legend').remove();
@@ -211,14 +210,14 @@ class LineChart  {
             this.svg.append("text")
                     .attr("class", "legend")
                     .attr("id", "legend-text-" + i)
-                    .attr("x", 0 + 2*legendRectWidth)
-                    .attr("y", ((legendSpacing * i) * 2) - (margin.top / 2))
+                    .attr("x", 0 + (legendSpacing * i) * 2)
+                    .attr("y", (-(margin.top / 2)))
                     .style("fill", function () {
                         return colors(d)
                     })
                     .style("font-family", "sans-serif")
-                    .style("font-size", "10px")
-                    .text(d);
+                    .style("font-size", "12px")
+                    .text(d.replace('_', ' '));
 
             // adds line in the same color as used in the graph
             var thisItem = d3.select("#legend-text-" + i).node();
@@ -230,7 +229,7 @@ class LineChart  {
                     .attr("data-color", function () {
                         return colors(d)
                     })
-                    .attr("d", "M" + (bb.x - legendSpacing - legendRectWidth) + "," + (bb.y + bb.height / 2) + " L" + (bb.x - legendSpacing) + "," + (bb.y + bb.height / 2))
+                    .attr("d", "M" + (bb.x - 25) + "," + (bb.y + bb.height / 2) + " L" + (bb.x - 5) + "," + (bb.y + bb.height / 2))
                     .style("stroke", function () {
                         return colors(d)
                     })
