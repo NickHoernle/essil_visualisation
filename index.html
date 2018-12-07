@@ -23,122 +23,66 @@
         <![endif]-->
 
         <div class="container">
-            <h3>Connected Worlds HDP Visualization</h3>
-
+            <h2>Connected Worlds HDP Visualization</h2>
+            <hr />
             <table>
                 <thead>
                     <td><h2>Controls:</h2></td>
-                    <td><h2>Video:</h2></td>
-                    <td><h2>Detailed View:</h2></td>
+                    <td><h2></h2></td>
                 </thead>
                 <tr id="top_row">
 
-                    <td id="controls">
+                    <td id="controls" style="margin-left: 20px">
 
-                        <table class="controls" style="font-size: 10px;">
-                            <thead style="font-weight: bold;">
-                                <tr>
-                                    <td></td>
-                                    <td colspan="4" style="text-align: center">Biomes</td>
-                                </tr>
-                                <tr>
-                                    <td>Attribute</td>
-                                    <td>Desert</td>
-                                    <td>Plains</td>
-                                    <td>Jungle</td>
-                                    <td>Wetlands</td>
-                                </tr>
-                            </thead>
-                            <tbody style="vertical-align: bottom;">
-                                <tr>
-                                    <td>Plants LV1</td>
-                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_1"></td>
-                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_1"></td>
-                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_1"></td>
-                                    <td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_1"></td>
-                                </tr>
-                                <tr>
-                                    <td>Plants LV2</td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_2"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_2"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_2"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_2"></td>
-                                </tr>
-                                <tr>
-                                    <td>Plants LV3</td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_3"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_3"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_3"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_3"></td>
-                                </tr>
-                                <tr>
-                                    <td>Plants LV4</td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_4"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_4"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_4"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_4"></td>
-                                </tr>
-                                <tr>
-                                    <td>All</td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_desert"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_plains"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_jungle"></td>
-                                    <td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_wetlands"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <hr />
-
-                        <center>
                             <p id='time'>Video Time: 00:00</p>
-                            <button type="button" class="btn btn-default btn-sm" id="play-pause" playing='true'>
-                                <span class="glyphicon glyphicon-play"></span> Play | <span class="glyphicon glyphicon-pause"></span> Pause
-                            </button>
-                        </center>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button id="step_left_button" type="button" class="btn btn-default btn-sm">Step Left<span class="glyphicon glyphicon-step-backward"></span></button>
+                                <button type="button" class="btn btn-default btn-sm" id="play-pause" playing='true'>
+                                    <span class="glyphicon glyphicon-play"></span> Play | <span class="glyphicon glyphicon-pause"></span> Pause
+                                </button>
+                                <button id="step_right_button" type="button" class="btn btn-default btn-sm">Step Right<span class="glyphicon glyphicon-step-forward"></span></button>
+                            </div>
+
+
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon" id="sizing-addon3">Jump to:</span>
+                                <input id="min_input" type="text" class="form-control" placeholder="mm" aria-describedby="sizing-addon3" style="width: 75px;">
+                                <input id="sec_input" type="text" class="form-control" placeholder="ss" aria-describedby="sizing-addon3" style="width: 75px;">
+                                <button id="go_button" type="button" class="btn btn-default btn-sm">Go!</button>
+                            </div>
+
+                            <button id="mark_change_point_button" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-time"></span> Mark as change point</button>
+
                         <hr />
-                        <!--<h4>Interesting Actions:</h4>-->
-                        <!--<ul id="'interesting_actions"></ul>-->
+                        <h4>Marked Change Points:</h4>
+                        <ul id="marked_change_points" class="change_points">
+
+                        </ul>
                     </td>
 
                     <td id="video">
-                        <video id="globalView" autoplay="autoplay">
-                            <source src="https://s3.amazonaws.com/essil-hdp/videos/1_december_2018_teacher_run.mp4" type="video/mp4">
-                        </video>
+                        <center>
+                            <video id="globalView" autoplay="autoplay">
+                                <source src="https://s3.amazonaws.com/essil-hdp/videos/test5.mp4" type="video/mp4">
+                            </video>
+                        </center>
                     </td>
-                    <td id="detailed_information">
-                        <h3>Detailed Water View:</h3>
-                        <div id="zoomed_chart" align="left" style="height: 40%"></div>
-                        <h3>Detailed Plants View:</h3>
-                        <div id="plants_chart" align="left" style="height: 40%"></div>
-                    </td>
+
                 </tr>
                 <tr id="bottom_row">
                     <td>
                     </td>
-                    <td id="full_chart"><h2>Session View:</h2></td>
-                    <td>
-                        <h3>Regime Description:</h3>
-                        <div id="ranking" style="height: 50%">
-                            <div style="height: 50%">
-                                <h5>Top Biomes Receiving Water:</h5>
-                                <ol id="top_biomes" style="font-size: 14px"></ol>
-                            </div>
-                            <div style="height: 50%">
-                                <h5>Top Biomes Losing Water:</h5>
-                                <ol id="bottom_biomes" style="font-size: 14px"></ol>
-                            </div>
-                        </div>
-                    </td>
+                    <td id="full_chart"><h2>Water Levels in Biomes:</h2></td>
                 </tr>
             </table>
 
-            <div id="wrapper">
-            </div>
+            <!--<div id="wrapper">-->
+            <!--</div>-->
 
-            <!--<div id="chart" align="left"></div>-->
+            <!--&lt;!&ndash;<div id="chart" align="left"></div>&ndash;&gt;-->
 
-            <div id="water_levels">
-            </div>
+            <!--<div id="water_levels">-->
+            <!--</div>-->
         </div>
 
 

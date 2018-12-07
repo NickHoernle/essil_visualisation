@@ -217,8 +217,8 @@ class LineChart  {
                         return colors(d)
                     })
                     .style("font-family", "sans-serif")
-                    .style("font-size", "10px")
-                    .text(d);
+                    .style("font-size", "16px")
+                    .text(d.replace('_', ' '));
 
             // adds line in the same color as used in the graph
             var thisItem = d3.select("#legend-text-" + i).node();
@@ -264,6 +264,30 @@ class LineChart  {
             .style("stroke-width", 3)
             .style("stroke", "black")
             .style("fill", "none");
+    }
+
+    plotMarkedChangePoint (seconds, id) {
+        var dte = new Date(2014, 4, 1);
+        var u = +dte;
+        var newU = u + seconds*1000;
+        var newD = new Date(newU);
+        var x = this.x
+
+        this.svg.append("line")
+            .attr("x1", x(newD))  //<<== change your code here
+            .attr("y1", this.height)
+            .attr("x2", x(newD))  //<<== and here
+            .attr("y2", this.ymin)
+            .attr('class', 'marked_change_point')
+            .attr('id', 'marked_change_point_' + id)
+            .attr("transform", null)
+            .style("stroke-width", 5)
+            .style("stroke", "red")
+            .style("fill", "none");
+    }
+
+    removeMarkedChangePoint (id) {
+        this.svg.select('#' + 'marked_change_point_' + id).remove();
     }
 
     plotInterval (start, stop) {

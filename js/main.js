@@ -31,6 +31,7 @@ var zoomedChart = null;
 var mainChart = null;
 var plantsChart = null;
 var plotted_main_periods = false;
+var video_seconds = [];
 
 function pad(value) {
     if(value < 10) {
@@ -95,16 +96,6 @@ d3.csv("data/input_file.csv", function(error, data) {
 
     waterLevelsAndPeriods = mapped_data;
 
-    zoomedChart = new LineChart(
-        data = waterLevelsAndPeriods,
-        width = $('#zoomed_chart').width() - margin.left - margin.right,
-        margin = margin,
-        height = $('#zoomed_chart').height() - margin.top - margin.bottom,
-        colors = COLORS,
-        element = '#zoomed_chart'
-    );
-    zoomedChart.plotLegend(BIOMES);
-
     mainChart = new LineChart(
         data = waterLevelsAndPeriods,
         width = $('#full_chart').width() - margin.left - margin.right,
@@ -116,25 +107,14 @@ d3.csv("data/input_file.csv", function(error, data) {
     mainChart.plotBiomes(BIOMES);
     mainChart.plotLegend(BIOMES);
 
-    plantsChart = new LineChart(
-        data = waterLevelsAndPeriods,
-        width = $('#plants_chart').width() - margin.left - margin.right,
-        margin = margin,
-        height = $('#plants_chart').height() - margin.top - margin.bottom,
-        colors = COLORS,
-        element = '#plants_chart'
-    );
-    plantsChart.plotLegend( getActivePlants() );
-
     // attach the click handlers:
     var array_flipped={};
     $.each(fix_seconds, function(i, el) {
         array_flipped[el]=parseInt(i);
     });
     var data = [array_flipped];
+    video_seconds = array_flipped;
     mainChart.attachTimeClickHandler(updateVidTime, data);
-    zoomedChart.attachTimeClickHandler(updateVidTime, data);
-    plantsChart.attachTimeClickHandler(updateVidTime, data);
 });
 
 function updateVidTime(time, data) {
@@ -149,41 +129,11 @@ function updateVidTime(time, data) {
 }
 
 function updateCharts(time) {
-
-    if ((time <= 1) | (plotted_main_periods == false)) {
-        waterLevelsAndPeriods.forEach(function(x) {
-            var time = x.seconds;
-            mainChart.plotActiveRegions(time, false);
-        });
-        plotted_main_periods = true;
-    }
-
-    zoomedChart.plotBiomes(BIOMES, time-30, time+70);
-    plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
-
     mainChart.plotTimeTracker(time);
-    zoomedChart.plotTimeTracker(time);
-    plantsChart.plotTimeTracker(time);
-
-    zoomedChart.plotActiveRegions(time, true);
-    plantsChart.plotActiveRegions(time, true);
-
-    mainChart.plotFocus(time);
-
-    plantsChart.plotLegend( getActivePlants() );
-
-    $('#top_biomes').empty();
-    waterLevelsAndPeriods[time].top.forEach( function(x) {
-        $('#top_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
-    });
-    $('#bottom_biomes').empty();
-    waterLevelsAndPeriods[time].bottom.forEach( function(x) {
-        $('#bottom_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
-    });
 }
 
 vid.ontimeupdate = function() {
-    var time = fix_seconds[parseInt(vid.currentTime)]+1;
+    var time = fix_seconds[parseInt(vid.currentTime)];
     updateCharts(time);
     $('#time').text('Video Time: ' + get_time_string(time))
 };
@@ -236,7 +186,7 @@ $(document).keydown(function(e) {
         case 37: // left
             var vid = $('#globalView')[0];
             var time = vid.currentTime
-            vid.currentTime = time - 2;
+            vid.currentTime = time - 1;
             // vid.currentTime = (start - 2);
             break;
 
@@ -246,7 +196,7 @@ $(document).keydown(function(e) {
         case 39: // right
             var vid = $('#globalView')[0];
             var time = vid.currentTime
-            vid.currentTime = time + 2;
+            vid.currentTime = time + 1;
             // vid.currentTime = (start + 2);
             break;
 
@@ -284,4 +234,39 @@ $('#play-pause').click(function() {
     else {
         play_vid();
     }
+});
+
+
+/*
+Add some handlers here to control the marking and navigation of the time series
+*/
+$('#go_button').click(function() {
+    var min = parseFloat($('#min_input')[0].value);
+    var sec = parseFloat($('#sec_input')[0].value) + min*60;
+    updateVidTime(sec, [video_seconds]);
+});
+
+$('#step_left_button').click(function() {
+    pause_vid();
+    vid = $('#globalView')[0];
+    vid.currentTime = vid.currentTime - 1;
+});
+
+$('#step_right_button').click(function() {
+    pause_vid();
+    vid = $('#globalView')[0];
+    vid.currentTime = vid.currentTime + 1;
+});
+
+$('#mark_change_point_button').click(function() {
+    var time = fix_seconds[parseInt($('#globalView')[0].currentTime)];
+    var time_string = get_time_string(time);
+    $('#marked_change_points').append('<li id=' + time + '><div class="input-group input-group-sm"><span class="input-group-addon">Change @ ' + time_string + '</span><button id="remove_change_button_' + time + '" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button></div></li>');
+
+    mainChart.plotMarkedChangePoint(time, time);
+
+    $('#remove_change_button_' + time).click(function() {
+        mainChart.removeMarkedChangePoint(time);
+        $("#marked_change_points li[id=" + time + "]")[0].remove()
+    });
 });

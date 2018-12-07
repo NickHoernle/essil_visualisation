@@ -17,7 +17,9 @@ table {
 table tbody .controls{
     border: solid;
     border-color: #000000;
-    width: 100%;
+    width: 15%;
+    min-width: 300px;
+    max-width: 300px;
 }
 
 table #top_row {
@@ -28,7 +30,9 @@ table #bottom_row {
 }
 
 table #controls {
-    width: 10%;
+    width: 15%;
+    min-width: 300px;
+    max-width: 300px;
 }
 
 table #video {
@@ -40,6 +44,7 @@ table #video {
     /*float:left; !* add this *!*/
     z-index: 99999;
     padding: 5px;
+    max-width: 1000px;
 }
 
 table #detailed_information {
@@ -71,6 +76,10 @@ table #detailed_information {
 }
 .lv3 {
     stroke-dasharray: 20,5;
+}
+
+#marked_change_points li {
+    list-style-type: none;
 }
 /* ==========================================================================
    Base styles: opinionated defaults
@@ -246,6 +255,7 @@ svg,
 video {
     vertical-align: middle;
     width: inherit;
+
 }
 
 #water_levels {
