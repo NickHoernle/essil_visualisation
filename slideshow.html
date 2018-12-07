@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {box-sizing: border-box}
+        body {font-family: Verdana, sans-serif; margin:0}
+        .mySlides {display: none}
+        img {vertical-align: middle;}
+
+        /* Slideshow container */
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .slideshow-container {
+            position: relative;
+            margin: auto;
+            min-height: 100%;
+            width: 100%;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            margin: 10px;
+            color: #dddddd;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Caption text */
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: #bbbbbb;
+            font-size: 18px;
+            padding: 30px 30px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+            .prev, .next,.text {font-size: 11px}
+        }
+
+        .content {
+            margin: 50px;
+            padding: 50px;
+            /*background: #f2f2f2;*/
+            /*mso-ansi-font-style:;*/
+        }
+
+        h1 {
+            font-family: 'Karla';
+            font-size: 50px;
+            font-weight: bold;
+            color: #717171;
+        }
+
+        p {
+            font-family: 'Karla';
+            font-size: x-large;
+            font-weight: normal;
+            color: #717171;
+            margin: 50px;
+        }
+
+        figcaption {
+            font-family: 'Karla';
+            font-size: x-large;
+            font-style: italic;
+            text-align: center;
+            color: #717171;
+            margin: 10px;
+        }
+
+        .column {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slideshow-container">
+
+    <div class="mySlides fade">
+        <div class="numbertext">1 / 4</div>
+        <div class="content">
+            <h1>
+                Experiment Overview
+            </h1>
+            <p>
+                The goal of this experiment is to investigate how people deconstruct and make sense of temporal data to assist with Artificial Intelligence support for students and teachers.
+            </p>
+            <p>
+                We will show you some data that comes from a learning environment in New York where high school students have worked to control the flows of water over time. Below you see a representation of the water flows in the system and a line graph that shows the level of water in the four biomes of the simulation.
+            </p>
+            <p>
+                <div class="column">
+                    <figure>
+                        <img src="slide_show_images/image_1.png">
+                        <figcaption>Schematic of Connected Worlds</figcaption>
+                    </figure>
+                </div>
+                <div class="column">
+                    <figure>
+                        <img src="slide_show_images/image_2.png">
+                        <figcaption>Line Graph showing the water levels in the four Biomes of Connected Worlds</figcaption>
+                    </figure>
+                </div>
+            </p>
+
+            <p>
+                Your task is to identify points in time where the <b>dynamics</b> in the simulation change significantly.
+            </p>
+        </div>
+        <div class="text">Caption Text</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">2 / 4</div>
+        <div class="content">
+            <h1>
+                Description of Connected Worlds
+            </h1>
+            <p>
+                Connected Worlds is the simulation environment that the students interact in. It consists of a <b>water sources</b> (the Waterfall, the Mountain Valley and the Reservoir) and <b>four biomes</b> (the Desert, the Plains, the Jungle and the Wetlands) where trees grow and animals flourish. The studnets interact on the <b>flood plain</b> and move the red logs on the floor to redirect water to the four biomes such that life can be sustained.
+            </p>
+        </div>
+        <div class="text">Caption Text</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">4 / 4</div>
+        <div class="content">
+            <h1>
+                Description of Time Series
+            </h1>
+            <p>
+                The line graph shows the level of water in the four biomes. When the students make a decision to re-route water in the simulation, we see the corresponding water in a biome rise (if the biome was targetted) or drop (if the water was directed away from the biome).
+            </p>
+
+            <p>
+                The image below has a red line marked where the water in the Jungle changes from a rising trend to a trend that is decreasing. The video can be consulted to confirm that the students redirected one of the logs that caused this dramatic change in the water level.
+            </p>
+        </div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">4 / 4</div>
+        <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
+        <div class="content">
+            <h1>
+                Description of User Interface
+            </h1>
+            <p>
+                You will see an interface that looks like the image below:
+            </p>
+
+            <p>
+                This interface presents one 8 minute session of the students interacting with the simulation (don't worry, the video is much faster than 8 minutes as it has been sped up). Your task is to click the play button and watch the black line and the video as the session plays <b>and to notice when you think a major change in the water flows occures</b>. You can use the pause button, the jump controls or the left and right arrows to navigate through the session.
+            </p>
+
+            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark this as a Change Point"</i> button to tag this point in time.</p>
+        </div>
+        <div class="text">Caption Three</div>
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+<!--<br>-->
+
+<!--<div style="text-align:center">-->
+    <!--<span class="dot" onclick="currentSlide(1)"></span>-->
+    <!--<span class="dot" onclick="currentSlide(2)"></span>-->
+    <!--<span class="dot" onclick="currentSlide(3)"></span>-->
+<!--</div>-->
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+    }
+</script>
+
+</body>
+</html>
