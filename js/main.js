@@ -193,7 +193,8 @@ vid.ontimeupdate = function() {
     var time = fix_seconds[parseInt(vid.currentTime)]+1;
     updateCharts(time);
     $('#time').text('Video Time: ' + get_time_string(time));
-    $('#representative_image img').attr('src', images[parseInt(vid.currentTime)]);
+    var vidTime = parseInt(vid.currentTime);
+    $('#representative_image img').attr('src', images[vidTime]);
 };
 
 /* Plotting controls*/

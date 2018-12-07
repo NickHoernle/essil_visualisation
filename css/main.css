@@ -341,7 +341,7 @@ hr {
 /*img*/
 
 svg {
-    cursor: pointer;
+    cursor: crosshair;
 }
 video {
 }
