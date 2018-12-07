@@ -14,11 +14,24 @@ table {
     width: 100%;
 }
 
-.controls{
+.controls {
     border: solid;
-    border-color: #000000;
+    border-color: #f1f1f1;
     width: 100%;
 }
+
+.controls thead {
+    border: solid;
+    background-color: #f1f1f1;
+    border-color: #f1f1f1;
+    margin: 5px;
+}
+
+.controls tr td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 
 .header {
     background-color: #f1f1f1;
@@ -168,14 +181,42 @@ div.tooltip {
 }
 
 #globalView {
-    max-height: 500px;
+    vertical-align: middle;
+    height: 100%;
     width: 100%;
+    max-height: 450px;
+    cursor: pointer;
 }
 
 #ranking {
-    padding-left: 5em;
     /*margin: 10em;*/
-    overflow: hidden; /* if you don't want #second to wrap below #first */
+    height: 50%;
+    width: 50%;
+    float: left;
+}
+
+#ranking .ranking {
+    padding-left: 3em;
+}
+
+.representative_image {
+    height: 50%;
+    width: 50%;
+    float: left;
+}
+
+img {
+    width: 50%;
+}
+
+figcaption {
+    font: 14px Arial;
+    font-weight: bold;
+    padding-top: 1px;
+}
+
+figure{
+    margin: 0px;
 }
 
 #ranking h5 {
@@ -294,15 +335,17 @@ hr {
  * https://github.com/h5bp/html5-boilerplate/issues/440
  */
 
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-    vertical-align: middle;
-    width: inherit;
+/*audio,*/
+/*canvas,*/
+/*iframe,*/
+/*img*/
+
+svg {
+    cursor: pointer;
 }
+video {
+}
+
 
 #water_levels {
     width: inherit;

@@ -229,7 +229,7 @@ class LineChart  {
                     .attr("data-color", function () {
                         return colors(d)
                     })
-                    .attr("d", "M" + (bb.x - 25) + "," + (bb.y + bb.height / 2) + " L" + (bb.x - 5) + "," + (bb.y + bb.height / 2))
+                    .attr("d", "M" + (bb.x - 25) + "," + (bb.y + bb.height / 2) + " L" + (bb.x - 6) + "," + (bb.y + bb.height / 2))
                     .style("stroke", function () {
                         return colors(d)
                     })

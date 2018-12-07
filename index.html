@@ -92,22 +92,32 @@
                 </div>
                 <hr />
                 <div>
-                    <h3>Time Segment Description:</h3>
-                    <div id="ranking" style="height: 50%">
-                        <div style="height: 50%">
-                            <h5>Top Biomes Receiving Water:</h5>
+                    <div id="ranking">
+                        <h5><b>Time Segment Description:</b></h5>
+                        <div class="ranking" style="height: 50%">
+                            <p>Top Biomes Receiving Water:</p>
                             <ol id="top_biomes" style="font-size: 14px"></ol>
                         </div>
-                        <div style="height: 50%">
-                            <h5>Top Biomes Losing Water:</h5>
+                        <div class="ranking" style="height: 50%">
+                            <p>Top Biomes Losing Water:</p>
                             <ol id="bottom_biomes" style="font-size: 14px"></ol>
+                        </div>
+                    </div>
+                    <div class="representative_image">
+                        <div id="representative_image">
+                            <figure>
+                                <center>
+                                    <img src="" alt="Representative Image">
+                                    <figcaption>Representative Image of Time Segment</figcaption>
+                                </center>
+                            </figure>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="column2">
-                <video id="globalView" autoplay="autoplay" style="max-height: 400px;">
+                <video id="globalView" autoplay="autoplay">
                     <source src="https://s3.amazonaws.com/essil-hdp/videos/test.mp4" type="video/mp4">
                 </video>
             </div>

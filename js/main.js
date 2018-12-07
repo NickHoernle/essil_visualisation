@@ -31,6 +31,7 @@ var zoomedChart = null;
 var mainChart = null;
 var plantsChart = null;
 var plotted_main_periods = false;
+var images = {};
 
 function pad(value) {
     if(value < 10) {
@@ -137,6 +138,12 @@ d3.csv("data/input_file.csv", function(error, data) {
     plantsChart.attachTimeClickHandler(updateVidTime, data);
 });
 
+d3.csv("data/images.csv", function(data) {
+    data.map(function(d) {
+        images[parseInt(d.second)] = 'data/images/' + d.image;
+    });
+});
+
 function updateVidTime(time, data) {
     var vid = document.getElementById("globalView");
     var array_flipped = data[0];
@@ -185,7 +192,8 @@ function updateCharts(time) {
 vid.ontimeupdate = function() {
     var time = fix_seconds[parseInt(vid.currentTime)]+1;
     updateCharts(time);
-    $('#time').text('Video Time: ' + get_time_string(time))
+    $('#time').text('Video Time: ' + get_time_string(time));
+    $('#representative_image img').attr('src', images[parseInt(vid.currentTime)]);
 };
 
 /* Plotting controls*/
