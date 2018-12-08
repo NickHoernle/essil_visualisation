@@ -117,6 +117,14 @@
             /*mso-ansi-font-style:;*/
         }
 
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 75%;
+            margin-top: auto;
+        }
+
         h1 {
             font-family: 'Karla';
             font-size: 50px;
@@ -141,9 +149,34 @@
             margin: 10px;
         }
 
-        .column {
-            width: 50%;
+        .wrapper {
+            display: flex; /* or inline-flex */
+            flex-flow: row nowrap; /* is default: columns along the main-axis (row) and no wrapping to next lines */
+            align-items: flex-end; /* bottom */
         }
+
+        .leftBox {
+            width: 50%;
+            /*!*height: 500px;*!*/
+            /*float: left;*/
+            /*vertical-align: bottom;*/
+            /*vert-align: bottom;*/
+        }
+        .rightBox {
+            width: 50%;
+            /*!*height: 500px;*!*/
+            /*float: right;*/
+            /*vertical-align: bottom;*/
+            /*vert-align: bottom;*/
+        }
+
+        figure {
+            /*vert-align: bottom;*/
+        }
+
+        img {
+        }
+
     </style>
 </head>
 <body>
@@ -157,25 +190,25 @@
                 Experiment Overview
             </h1>
             <p>
-                The goal of this experiment is to investigate how people deconstruct and make sense of temporal data to assist with Artificial Intelligence support for students and teachers.
+                The goal of this experiment is to investigate how people deconstruct and make sense of temporal data.
             </p>
             <p>
-                We will show you some data that comes from a learning environment in New York where high school students have worked to control the flows of water over time. Below you see a representation of the water flows in the system and a line graph that shows the level of water in the four biomes of the simulation.
+                We will show you some data that comes from a simulated learning environment in New York where high school students have worked to control the flows of water in a closed system over time. Below you see a representation of the water flows in the system and a line graph that shows the level of water in the four biomes (areas) of the simulation.
             </p>
-            <p>
-                <div class="column">
+            <div class="wrapper">
+                <div class="leftBox">
                     <figure>
-                        <img src="slide_show_images/image_1.png">
+                        <img src="slide_show_images/image_1.png" class="center" align="bottom">
                         <figcaption>Schematic of Connected Worlds</figcaption>
                     </figure>
                 </div>
-                <div class="column">
+                <div class="rightBox">
                     <figure>
-                        <img src="slide_show_images/image_2.png">
+                        <img src="slide_show_images/image_2.png" class="center" align="bottom">
                         <figcaption>Line Graph showing the water levels in the four Biomes of Connected Worlds</figcaption>
                     </figure>
                 </div>
-            </p>
+            </div>
 
             <p>
                 Your task is to identify points in time where the <b>dynamics</b> in the simulation change significantly.
