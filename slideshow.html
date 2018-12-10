@@ -2,7 +2,8 @@
 <html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         * {box-sizing: border-box}
@@ -96,21 +97,6 @@
             animation-duration: 1.5s;
         }
 
-        @-webkit-keyframes fade {
-            from {opacity: .4}
-            to {opacity: 1}
-        }
-
-        @keyframes fade {
-            from {opacity: .4}
-            to {opacity: 1}
-        }
-
-        /* On smaller screens, decrease text size */
-        @media only screen and (max-width: 300px) {
-            .prev, .next,.text {font-size: 11px}
-        }
-
         .content {
             margin: 50px;
             padding: 50px;
@@ -178,6 +164,65 @@
         img {
         }
 
+        .button {
+            background-color: white;
+            border: none;
+            border-left: 1px solid #717171;
+            border-right: 1px solid #717171;
+            color: #717171;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 25px;
+            font-family: Karla;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: 0.6s ease;
+        }
+
+        .button:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /*
+        Keep this stuffs at the bottom
+        */
+        @-webkit-keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 1000px) {
+            .prev, .next,.text {font-size: 16px}
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 16px
+            }
+
+            .wrapper {
+                display: inline;
+                /*flex-flow: unset;*/
+                /*align-items: normal;*/
+            }
+            .leftBox {
+                width: 100%;
+            }
+            .rightBox {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -227,8 +272,12 @@
             <p>
                 Connected Worlds is a simulated environment where the students control water flows and plant trees that allow animals to flourish. It consists of <b>water sources</b> (<em>the Waterfall, the Mountain Valley and the Reservoir</em>) and <b>four biomes</b> (<em>the Desert, the Plains, the Jungle and the Wetlands</em>) where the trees grow and the animals find their habitat. The students interact on the <b>flood plain</b> and move the red logs on the floor to redirect water to the four biomes such that life can be sustained.
             </p>
+
+            <figure>
+                <img src="slide_show_images/image_3.png" class="center" align="bottom">
+                <figcaption>Schematic of Connected Worlds with Labels</figcaption>
+            </figure>
         </div>
-        <div class="text">Caption Text</div>
     </div>
 
     <div class="mySlides fade">
@@ -283,7 +332,9 @@
 
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
-    <button class="success" onclick="">Got it! Take me to the experiment.</button>
+    <center>
+        <button class="button" onclick="">Got it! Take me to the experiment.</button>
+    </center>
 </div>
 <!--<br>-->
 
