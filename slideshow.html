@@ -3,6 +3,7 @@
 <head>
     <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         * {box-sizing: border-box}
         body {font-family: Verdana, sans-serif; margin:0}
@@ -184,7 +185,7 @@
 <div class="slideshow-container">
 
     <div class="mySlides fade">
-        <div class="numbertext">1 / 4</div>
+        <div class="numbertext">1 / 5</div>
         <div class="content">
             <h1>
                 Experiment Overview
@@ -218,26 +219,26 @@
     </div>
 
     <div class="mySlides fade">
-        <div class="numbertext">2 / 4</div>
+        <div class="numbertext">2 / 5</div>
         <div class="content">
             <h1>
                 Description of Connected Worlds
             </h1>
             <p>
-                Connected Worlds is the simulation environment that the students interact in. It consists of a <b>water sources</b> (the Waterfall, the Mountain Valley and the Reservoir) and <b>four biomes</b> (the Desert, the Plains, the Jungle and the Wetlands) where trees grow and animals flourish. The studnets interact on the <b>flood plain</b> and move the red logs on the floor to redirect water to the four biomes such that life can be sustained.
+                Connected Worlds is a simulated environment where the students control water flows and plant trees that allow animals to flourish. It consists of <b>water sources</b> (<em>the Waterfall, the Mountain Valley and the Reservoir</em>) and <b>four biomes</b> (<em>the Desert, the Plains, the Jungle and the Wetlands</em>) where the trees grow and the animals find their habitat. The students interact on the <b>flood plain</b> and move the red logs on the floor to redirect water to the four biomes such that life can be sustained.
             </p>
         </div>
         <div class="text">Caption Text</div>
     </div>
 
     <div class="mySlides fade">
-        <div class="numbertext">4 / 4</div>
+        <div class="numbertext">3 / 5</div>
         <div class="content">
             <h1>
                 Description of Time Series
             </h1>
             <p>
-                The line graph shows the level of water in the four biomes. When the students make a decision to re-route water in the simulation, we see the corresponding water in a biome rise (if the biome was targetted) or drop (if the water was directed away from the biome).
+                The line graph shows the level of water in the four biomes. When the students make a decision to re-route water in the simulation, we see the corresponding water in a biome rise, if the biome was targeted, or drop, if the water was directed away from the biome.
             </p>
 
             <p>
@@ -247,7 +248,7 @@
     </div>
 
     <div class="mySlides fade">
-        <div class="numbertext">4 / 4</div>
+        <div class="numbertext">4 / 5</div>
         <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
         <div class="content">
             <h1>
@@ -258,17 +259,31 @@
             </p>
 
             <p>
-                This interface presents one 8 minute session of the students interacting with the simulation (don't worry, the video is much faster than 8 minutes as it has been sped up). Your task is to click the play button and watch the black line and the video as the session plays <b>and to notice when you think a major change in the water flows occures</b>. You can use the pause button, the jump controls or the left and right arrows to navigate through the session.
+                This interface presents one 8 minute session of the students interacting with the simulation (<em>don't worry, the video is much faster than 8 minutes as it has been sped up</em>). Your task is to click the play button and watch the black time marker line and the video as the session plays <b>and to notice when you think a major change in the water flows occurs</b>. You can use the pause button, the jump controls or the left and right arrows to navigate through the session.
             </p>
 
-            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark this as a Change Point"</i> button to tag this point in time.</p>
+            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark this as a Change Point"</i> button to tag this point in time (you can also right click on that point in time to mark the change point).</p>
+        </div>
+        <div class="text">Caption Three</div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">5 / 5</div>
+        <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
+        <div class="content">
+            <h1>
+                What does a 'Change' mean?
+            </h1>
+            <p>
+                We have deliberately left this fairly vague as we'd like to understand how you interpret the progression of this systme through time and whether or not you agree with the changes that are identified by others. However, to assist with this process, we have presented two examples of what changes might look like. In change (1), you can clearly see the water level in the <b>Jungle</b> rise before the pink marker and then decrease dramatically afterward. Similarly, in change (2), TODO.
+            </p>
         </div>
         <div class="text">Caption Three</div>
     </div>
 
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
+    <button class="success" onclick="">Got it! Take me to the experiment.</button>
 </div>
 <!--<br>-->
 
@@ -277,6 +292,8 @@
     <!--<span class="dot" onclick="currentSlide(2)"></span>-->
     <!--<span class="dot" onclick="currentSlide(3)"></span>-->
 <!--</div>-->
+
+</body>
 
 <script>
     var slideIndex = 1;
@@ -299,13 +316,33 @@
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
+        // for (i = 0; i < dots.length; i++) {
+        //     dots[i].className = dots[i].className.replace(" active", "");
+        // }
         slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
+        // dots[slideIndex-1].className += " active";
     }
+
+    $(document).keydown(function(e) {
+        switch(e.which) {
+            case 37: // left
+                plusSlides(-1);
+                break;
+
+            case 38: // up
+                break;
+
+            case 39: // right
+                plusSlides(1);
+                break;
+
+            case 40: // down
+                break;
+
+            default: return; // exit this handler for other keys
+        }
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+    });
 </script>
 
-</body>
 </html>
