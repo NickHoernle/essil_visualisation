@@ -14,6 +14,11 @@ table {
     width: 100%;
 }
 
+.controls {
+    margin-left: 50px;
+    height: 20%;
+}
+
 table tbody .controls{
     border: solid;
     border-color: #000000;
@@ -40,11 +45,13 @@ table #video {
 }
 
 #globalView {
+    vertical-align: middle;
+    height: 100%;
     width: 100%;
-    /*float:left; !* add this *!*/
+    max-height: 650px;
+    cursor: pointer;
     z-index: 99999;
-    padding: 5px;
-    max-width: 1000px;
+    margin-left: -200px;
 }
 
 table #detailed_information {
@@ -61,6 +68,8 @@ table #detailed_information {
 #full_chart {
     height: 250px;
     width: inherit;
+    margin: 30px;
+    padding: 15px;
 }
 
 #plants_chart {
@@ -78,8 +87,53 @@ table #detailed_information {
     stroke-dasharray: 20,5;
 }
 
+.header {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
+#marked_change_points {
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*-webkit-columns: 150px 2;*/
+    /*-moz-columns: 150px 2;*/
+    /*columns: 150px 2;*/
+}
+
 #marked_change_points li {
     list-style-type: none;
+}
+
+#marked_points {
+    height: 60%;
+    overflow-y: scroll;
+}
+
+#marked_points_cnt {
+}
+
+.completed_button {
+    background-color: white;
+    border: none;
+    border-left: 1px solid #717171;
+    border-right: 1px solid #717171;
+    color: #717171;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: 0.6s ease;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.completed_button:hover {
+    background-color: #087501;
+    color: #7ee700;
+    text-shadow: none;
 }
 /* ==========================================================================
    Base styles: opinionated defaults
@@ -119,10 +173,6 @@ div.tooltip {
 #wrapper {
     width: 100%;
     overflow: hidden; /* will contain if #first is longer than #second */
-}
-
-#globalView video {
-    z-index: 99999;
 }
 
 #ranking {
@@ -232,6 +282,25 @@ td.explanation{
  * A better looking default horizontal rule
  */
 
+.column1 {
+    float: left;
+    width: 30%;
+    margin-top: 25px;
+    padding-left: 50px;
+    padding-right: 100px;
+    height: 650px;
+    max-height: 650px;
+}
+
+.column2 {
+    float: left;
+    width: 60%;
+    padding: 15px;
+    height: 650px;
+    max-height: 650px;
+}
+
+
 hr {
     display: block;
     height: 1px;
@@ -239,6 +308,28 @@ hr {
     border-top: 1px solid #ccc;
     margin: 1em 0;
     padding: 0;
+}
+
+.row {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width:600px) {
+    .column1 {
+        width: 100%;
+    }
+    .column2 {
+        width: 100%;
+    }
+    .column3 {
+        width: 100%;
+    }
 }
 
 /*
@@ -255,7 +346,6 @@ svg,
 video {
     vertical-align: middle;
     width: inherit;
-
 }
 
 #water_levels {

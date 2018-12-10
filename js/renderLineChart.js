@@ -298,8 +298,8 @@ class LineChart  {
         var dte = new Date(2014, 4, 1);
         var offset = $(this.element).offset().left + this.margin.left;
         var x_axis = this.x;
-        d3.select(this.element).on('click', function(){
-            var selected_seconds = (x_axis.invert(d3.event.pageX - offset) - dte)/1000;
+        d3.select(this.element).on('click', function() {
+            var selected_seconds = (x_axis.invert(d3.event.pageX - offset) - dte)/1000 - 3;
             callback(selected_seconds, charts);
         });
     }

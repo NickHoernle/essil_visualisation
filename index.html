@@ -22,69 +22,63 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-        <div class="container">
-            <h2>Connected Worlds HDP Visualization</h2>
-            <hr />
-            <table>
-                <thead>
-                    <td><h2>Controls:</h2></td>
-                    <td><h2></h2></td>
-                </thead>
-                <tr id="top_row">
+        <div class="header">
+            <h2>Connected Worlds Session Experiment</h2>
+            <p><i>Please mark the on the time series where you think changes occur</i></p>
+        </div>
+        <hr />
 
-                    <td id="controls" style="margin-left: 20px">
-
-                            <p id='time'>Video Time: 00:00</p>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button id="step_left_button" type="button" class="btn btn-default btn-sm">Step Left<span class="glyphicon glyphicon-step-backward"></span></button>
-                                <button type="button" class="btn btn-default btn-sm" id="play-pause" playing='true'>
-                                    <span class="glyphicon glyphicon-play"></span> Play | <span class="glyphicon glyphicon-pause"></span> Pause
-                                </button>
-                                <button id="step_right_button" type="button" class="btn btn-default btn-sm">Step Right<span class="glyphicon glyphicon-step-forward"></span></button>
-                            </div>
+        <div class="row">
+            <div class="column1">
+                <h2>Controls:</h2>
+                <div class="controls">
+                    <p id='time'>Video Time: 00:00</p>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button id="step_left_button" type="button" class="btn btn-default btn-sm">Step Left<span class="glyphicon glyphicon-step-backward"></span></button>
+                        <button type="button" class="btn btn-default btn-sm" id="play-pause" playing='true'>
+                            <span class="glyphicon glyphicon-play"></span> Play | <span class="glyphicon glyphicon-pause"></span> Pause
+                        </button>
+                        <button id="step_right_button" type="button" class="btn btn-default btn-sm">Step Right<span class="glyphicon glyphicon-step-forward"></span></button>
+                    </div>
 
 
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon" id="sizing-addon3">Jump to:</span>
-                                <input id="min_input" type="text" class="form-control" placeholder="mm" aria-describedby="sizing-addon3" style="width: 75px;">
-                                <input id="sec_input" type="text" class="form-control" placeholder="ss" aria-describedby="sizing-addon3" style="width: 75px;">
-                                <button id="go_button" type="button" class="btn btn-default btn-sm">Go!</button>
-                            </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon" id="sizing-addon3">Jump to:</span>
+                        <input id="min_input" type="text" class="form-control" placeholder="mm" aria-describedby="sizing-addon3" style="width: 75px;">
+                        <input id="sec_input" type="text" class="form-control" placeholder="ss" aria-describedby="sizing-addon3" style="width: 75px;">
+                        <button id="go_button" type="button" class="btn btn-default btn-sm">Go!</button>
+                    </div>
 
-                            <button id="mark_change_point_button" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-time"></span> Mark as change point</button>
-
-                        <hr />
-                        <h4>Marked Change Points:</h4>
+                    <button id="mark_change_point_button" type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-time"></span> Mark as change point</button><button id="completed" type="button" class="completed_button"><span class="glyphicon glyphicon-ok"></span> Done Labeling</button>
+                </div>
+                <hr />
+                <div id="marked_points">
+                    <h4>Marked Change Points:</h4>
+                    <div id="marked_points_cnt">
                         <ul id="marked_change_points" class="change_points">
-
                         </ul>
-                    </td>
+                    </div>
+                </div>
+            </div>
 
-                    <td id="video">
-                        <center>
-                            <video id="globalView" autoplay="autoplay">
-                                <source src="https://s3.amazonaws.com/essil-hdp/videos/test_5.mp4" type="video/mp4">
-                            </video>
-                        </center>
-                    </td>
-
-                </tr>
-                <tr id="bottom_row">
-                    <td>
-                    </td>
-                    <td id="full_chart"><h2>Water Levels in Biomes:</h2></td>
-                </tr>
-            </table>
-
-            <!--<div id="wrapper">-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash;<div id="chart" align="left"></div>&ndash;&gt;-->
-
-            <!--<div id="water_levels">-->
-            <!--</div>-->
+            <div class="column2">
+                <div id="video">
+                    <video id="globalView" autoplay="autoplay">
+                        <source src="https://s3.amazonaws.com/essil-hdp/videos/test_5.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="full_chart"><h2>Water Levels in Biomes:</h2></div>
         </div>
 
+        <div class="row">
+            <hr />
+            <center>
+                <button id="completed2" type="button" class="completed_button"><span class="glyphicon glyphicon-ok"></span> Done Labeling</button>
+            </center>
+        </div>
 
         <script src="js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

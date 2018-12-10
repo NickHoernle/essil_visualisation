@@ -1,7 +1,7 @@
 var BIOMES = ['Desert_Water', 'Plains_Water', 'Jungle_Water', 'Wetlands_Water']
 var PLANTS = ['Desert_Plants', 'Plains_Plants', 'Jungle_Plants', 'Wetlands_Plants']
 var LEVELS = ['lv1', 'lv2', 'lv3', 'lv4']
-var COLORS = ['green', 'blue', 'red', 'purple'];
+var COLORS = ['blue', 'red', 'purple', '#00c7ff'];
 
 
 /*
@@ -122,7 +122,7 @@ function updateVidTime(time, data) {
     var array_flipped = data[0];
     var sec = parseInt(time);
     while (!(sec in array_flipped)) {
-        sec = sec + 1;
+        sec = sec - 1;
     }
     pause_vid();
     vid.currentTime = array_flipped[sec];
@@ -244,29 +244,57 @@ $('#go_button').click(function() {
     var min = parseFloat($('#min_input')[0].value);
     var sec = parseFloat($('#sec_input')[0].value) + min*60;
     updateVidTime(sec, [video_seconds]);
+    pause_vid();
 });
 
 $('#step_left_button').click(function() {
     pause_vid();
     vid = $('#globalView')[0];
     vid.currentTime = vid.currentTime - 1;
+    play_vid();
 });
 
 $('#step_right_button').click(function() {
     pause_vid();
     vid = $('#globalView')[0];
     vid.currentTime = vid.currentTime + 1;
+    play_vid();
 });
 
-$('#mark_change_point_button').click(function() {
+function mark_timeseries() {
     var time = fix_seconds[parseInt($('#globalView')[0].currentTime)];
     var time_string = get_time_string(time);
-    $('#marked_change_points').append('<li id=' + time + '><div class="input-group input-group-sm"><span class="input-group-addon">Change @ ' + time_string + '</span><button id="remove_change_button_' + time + '" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button></div></li>');
+    var target = $('#marked_change_points');
+    var element = '<li id='+time+'><div class="input-group input-group-sm"><span class="input-group-addon">Change @ ' + time_string + '</span><button id="remove_change_button_' + time + '" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button></div></li>'
 
-    mainChart.plotMarkedChangePoint(time, time);
+    var added = false;
+    target.find('li').each(function(){
+        if (parseFloat(this.id) > time) {
+            $(element).insertBefore(this);
+            added = true;
+            return false;
+        }
+    });
+    if(!added) $(element).appendTo($(target));
+
+    // target.append();
 
     $('#remove_change_button_' + time).click(function() {
         mainChart.removeMarkedChangePoint(time);
         $("#marked_change_points li[id=" + time + "]")[0].remove()
     });
+
+    mainChart.plotMarkedChangePoint(time, time);
+}
+
+$('#mark_change_point_button').click(function() {
+    mark_timeseries();
+});
+
+$(window).keypress(function (e) {
+    if (e.key === ' ' || e.key === 'Spacebar') {
+        // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
+        e.preventDefault()
+        mark_timeseries();
+    }
 });
