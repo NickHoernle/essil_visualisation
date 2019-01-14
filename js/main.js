@@ -298,3 +298,20 @@ $(window).keypress(function (e) {
         mark_timeseries();
     }
 });
+
+// var ifrm= $('#pagecontainer>#page').get(0)
+// ifrm.onload=function() {
+//     $(this).fadeIn("slow")
+// }
+//
+function overlay_on() {
+    document.getElementById("overlay").style.display = "block";
+}
+//
+// function overlay_off() {
+//     $('div#overlay').load('slideshow.html',function(e){$(this).fadeOut('slow')})
+// }
+
+// $(function(){
+//     $("#overlay").load("slideshow.html");
+// });

@@ -2,7 +2,6 @@
 <html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet'>
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
@@ -28,24 +27,21 @@
         /* Next & previous buttons */
         .prev, .next {
             cursor: pointer;
-            position: absolute;
-            top: 50%;
+            /*position: absolute;*/
+            /*top: 0;*/
+            background-color: #f2f2f2;
+            border: none;
+            color: #717171;
+            padding: 15px 32px 15px 32px;
             width: auto;
-            padding: 16px;
-            margin-top: -22px;
             margin: 10px;
-            color: #dddddd;
+            margin-bottom: 150px;
+            opacity: .8;
             font-weight: bold;
             font-size: 18px;
             transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
             user-select: none;
-        }
-
-        /* Position the "next button" to the right */
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
+            text-align: center;
         }
 
         /* On hover, add a black background color with a little bit see-through */
@@ -69,6 +65,7 @@
             color: #bbbbbb;
             font-size: 18px;
             padding: 30px 30px;
+            margin-left: 70px;
             position: absolute;
             top: 0;
         }
@@ -108,8 +105,12 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            max-width: 75%;
+            max-width: 100%;
             margin-top: auto;
+        }
+
+        .center2 {
+            max-width: 65%;
         }
 
         h1 {
@@ -143,14 +144,14 @@
         }
 
         .leftBox {
-            width: 50%;
+            width: 40%;
             /*!*height: 500px;*!*/
             /*float: left;*/
             /*vertical-align: bottom;*/
             /*vert-align: bottom;*/
         }
         .rightBox {
-            width: 50%;
+            width: 60%;
             /*!*height: 500px;*!*/
             /*float: right;*/
             /*vertical-align: bottom;*/
@@ -165,7 +166,7 @@
         }
 
         .button {
-            background-color: white;
+            background-color: #f2f2f2;
             border: none;
             border-left: 1px solid #717171;
             border-right: 1px solid #717171;
@@ -199,8 +200,8 @@
         }
 
         /* On smaller screens, decrease text size */
-        @media only screen and (max-width: 1000px) {
-            .prev, .next,.text {font-size: 16px}
+        @media only screen and (max-width: 1100px) {
+            .prev, .next {font-size: 16px}
 
             h1 {
                 font-size: 20px;
@@ -230,7 +231,7 @@
 <div class="slideshow-container">
 
     <div class="mySlides fade">
-        <div class="numbertext">1 / 5</div>
+        <div class="numbertext">1 / </div>
         <div class="content">
             <h1>
                 Experiment Overview
@@ -239,7 +240,7 @@
                 The goal of this experiment is to investigate how people deconstruct and make sense of temporal data.
             </p>
             <p>
-                We will show you some data that comes from a simulated learning environment in New York where high school students have worked to control the flows of water in a closed system over time. Below you see a representation of the water flows in the system and a line graph that shows the level of water in the four biomes (areas) of the simulation.
+                We will show you some data that comes from a simulated learning environment in New York where school students have worked to control the flows of water in a closed system over time. Below you see a representation of the water flows in the system and a line graph that shows the level of water in the four biomes (areas) of the simulation.
             </p>
             <div class="wrapper">
                 <div class="leftBox">
@@ -257,83 +258,98 @@
             </div>
 
             <p>
-                Your task is to identify points in time where the <b>dynamics</b> in the simulation change significantly.
+                Your task is to identify points in time where the flows of water in the simulation change significantly.
             </p>
         </div>
-        <div class="text">Caption Text</div>
     </div>
 
     <div class="mySlides fade">
-        <div class="numbertext">2 / 5</div>
+        <div class="numbertext">2 / </div>
         <div class="content">
             <h1>
                 Description of Connected Worlds
             </h1>
             <p>
-                Connected Worlds is a simulated environment where the students control water flows and plant trees that allow animals to flourish. It consists of <b>water sources</b> (<em>the Waterfall, the Mountain Valley and the Reservoir</em>) and <b>four biomes</b> (<em>the Desert, the Plains, the Jungle and the Wetlands</em>) where the trees grow and the animals find their habitat. The students interact on the <b>flood plain</b> and move the red logs on the floor to redirect water to the four biomes such that life can be sustained.
+                Connected Worlds is a simulated environment where the students control water flows and plant trees that allow animals to flourish. It consists of <b>water sources</b> (<em>the Waterfall, the Mountain Valley and the Reservoir</em>) and <b>four biomes</b> (<em>the Desert, the Plains, the Jungle and the Wetlands</em>) where the trees grow and the animals find their habitat. The students interact on the <b>floor</b> and move the red logs to redirect water to the four biomes such that life can be sustained.
             </p>
 
             <figure>
-                <img src="slide_show_images/image_3.png" class="center" align="bottom">
+                <img src="slide_show_images/image_3.png" class="center center2" align="bottom">
                 <figcaption>Schematic of Connected Worlds with Labels</figcaption>
             </figure>
         </div>
     </div>
 
     <div class="mySlides fade">
-        <div class="numbertext">3 / 5</div>
+        <div class="numbertext">3 / </div>
         <div class="content">
             <h1>
-                Description of Time Series
+                Description of Water Level Graph
             </h1>
             <p>
-                The line graph shows the level of water in the four biomes. When the students make a decision to re-route water in the simulation, we see the corresponding water in a biome rise, if the biome was targeted, or drop, if the water was directed away from the biome.
+                The line graph shows the level of water in the four biomes. When the students make a decision to re-route water in the simulation, we see the corresponding water in a biome rise if the biome was targeted, or drop if the water was directed away from the biome.
             </p>
 
             <p>
                 The image below has a red line marked where the water in the Jungle changes from a rising trend to a trend that is decreasing. The video can be consulted to confirm that the students redirected one of the logs that caused this dramatic change in the water level.
             </p>
+
+            <figure>
+                <img src="slide_show_images/image_4.png" class="center" align="bottom">
+                <figcaption>Example of one change where the Jungle water changes from increasing to decreasing</figcaption>
+            </figure>
         </div>
     </div>
 
     <div class="mySlides fade">
-        <div class="numbertext">4 / 5</div>
+        <div class="numbertext">4 / </div>
         <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
         <div class="content">
             <h1>
                 Description of User Interface
             </h1>
             <p>
-                You will see an interface that looks like the image below:
+                You will see an interface that looks like the following image:
             </p>
+
+            <figure>
+                <img src="slide_show_images/image_5.png" class="center" align="bottom">
+                <figcaption>Interface description</figcaption>
+            </figure>
 
             <p>
-                This interface presents one 8 minute session of the students interacting with the simulation (<em>don't worry, the video is much faster than 8 minutes as it has been sped up</em>). Your task is to click the play button and watch the black time marker line and the video as the session plays <b>and to notice when you think a major change in the water flows occurs</b>. You can use the pause button, the jump controls or the left and right arrows to navigate through the session.
+                This interface presents a session from students interacting with Connected Worlds. Your task is to click the play button and watch the black time marker line and the video as the session plays <b>and to notice when you think a major change in the water flows occurs</b>. You can use the play/pause button, the jump controls or the left and right arrows to navigate through the session.
             </p>
 
-            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark this as a Change Point"</i> button to tag this point in time (you can also right click on that point in time to mark the change point).</p>
-        </div>
-        <div class="text">Caption Three</div>
-    </div>
+            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark as major change in water flows"</i> button to tag this point in time (you can also use the Spacebar to mark that as a change point).</p>
 
-    <div class="mySlides fade">
-        <div class="numbertext">5 / 5</div>
-        <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
-        <div class="content">
-            <h1>
-                What does a 'Change' mean?
-            </h1>
             <p>
-                We have deliberately left this fairly vague as we'd like to understand how you interpret the progression of this systme through time and whether or not you agree with the changes that are identified by others. However, to assist with this process, we have presented two examples of what changes might look like. In change (1), you can clearly see the water level in the <b>Jungle</b> rise before the pink marker and then decrease dramatically afterward. Similarly, in change (2), TODO.
+                Remember to click the <em>"Done Labelling"</em> button when you are finished.
             </p>
         </div>
-        <div class="text">Caption Three</div>
     </div>
 
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    <!--<div class="mySlides fade">-->
+        <!--<div class="numbertext">5 / </div>-->
+        <!--&lt;!&ndash;<img src="img_mountains_wide.jpg" style="width:100%">&ndash;&gt;-->
+        <!--<div class="content">-->
+            <!--<h1>-->
+                <!--What does a 'Change' mean?-->
+            <!--</h1>-->
+            <!--<p>-->
+                <!--We have deliberately left this fairly vague as we'd like to understand how you interpret the progression of this system through time and whether or not you agree with the changes that are identified by others. However, to assist with this process, we have presented an example of what a labeled time series might look like. You will note that any large change in any one of the four water levels has been tagged as a change.-->
+            <!--</p>-->
+
+            <!--<figure>-->
+                <!--<img src="slide_show_images/image_6.png" class="center" align="bottom">-->
+                <!--<figcaption>Example of a labeled time series</figcaption>-->
+            <!--</figure>-->
+        <!--</div>-->
+    <!--</div>-->
     <center>
-        <button class="button" onclick="">Got it! Take me to the experiment.</button>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <button class="button" id="control" onclick="navigation()">Next Slide</button>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </center>
 </div>
 <!--<br>-->
@@ -347,15 +363,39 @@
 </body>
 
 <script>
+    var num_slides = 4;
+    $('.numbertext').append('' + num_slides);
+
     var slideIndex = 1;
+    var slides_seen = false;
     showSlides(slideIndex);
 
     function plusSlides(n) {
         showSlides(slideIndex += n);
+        button_state(false);
     }
 
     function currentSlide(n) {
         showSlides(slideIndex = n);
+    }
+
+    function button_state(pressed) {
+        if (slides_seen == true) {
+            $('#control').text('Got it! Take me to the experiment.');
+            if (pressed){ window.parent.document.getElementById("overlay").style.display = "none"; }
+        }
+        else if (slideIndex == num_slides) {
+            slides_seen = true;
+            $('#control').text('Got it! Take me to the experiment.');
+        }
+        else {
+            $('#control').text('Next Slide');
+        }
+    }
+
+    function navigation() {
+        showSlides(slideIndex += 1);
+        button_state(true);
     }
 
     function showSlides(n) {
