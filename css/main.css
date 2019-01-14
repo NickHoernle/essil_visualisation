@@ -130,6 +130,21 @@ button {
     width: 60%;
 }
 
+#name {
+    background-color: #e0e0e0;
+    border: 1px solid #717171;
+    color: #717171;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    transition: 0.6s ease;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    width: 60%;
+}
+
 .help_button {
     background-color: white;
     border: none;

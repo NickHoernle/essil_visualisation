@@ -8,8 +8,13 @@ var COLORS = ['blue', 'red', 'purple', '#00c7ff'];
 Sort out the video stuffs here
  */
 var vid = document.getElementById("globalView");
+var file1 = "data/input_file.csv";
+var file2 = 'data/input_file2_2018-12-01_10-49-03.csv';
 var speed = 3.0;
 vid.playbackRate = speed;
+var completion_state = 0;
+var url = 'https://script.google.com/macros/s/AKfycbyM7-cO2Aa3nKKJcwWT2WUz4AXKpPKwVXZNvrWRL9qns6h7Mcg/exec';
+var selected_file = 0;
 
 
 /*
@@ -47,75 +52,61 @@ function get_time_string(seconds) {
     return pad(minutes) + ':' + pad(sec);
 }
 
-d3.csv("data/input_file.csv", function(error, data) {
+function load_data(file) {
+    d3.csv(file, function(error, data) {
 
-    var mapped_data = data.map(function(d) {
-        var dte = new Date(2014, 4, 1);
-        var u = +dte;
-        var seconds = parseInt(d.seconds);
-        var newU = u + seconds*1000;
-        var newD = new Date(newU);
+        var mapped_data = data.map(function(d) {
+            var dte = new Date(2014, 4, 1);
+            var u = +dte;
+            var seconds = parseInt(d.seconds);
+            var newU = u + seconds*1000;
+            var newD = new Date(newU);
 
-        var datapoint = {};
-        datapoint.seconds = d.seconds;
-        datapoint.start = d.start;
-        datapoint.stop = d.stop;
-        datapoint.date = newD;
-        datapoint.Desert_Water = +parseFloat(d.Desert_Water);
-        datapoint.Jungle_Water = +parseFloat(d.Jungle_Water);
-        datapoint.Wetlands_Water = +parseFloat(d.Wetlands_Water);
-        datapoint.Plains_Water = +parseFloat(d.Plains_Water);
-        datapoint.Desert_Plants = +parseFloat(d.Desert_Plants);
-        datapoint.Jungle_Plants = +parseFloat(d.Jungle_Plants);
-        datapoint.Wetlands_Plants = +parseFloat(d.Wetlands_Plants);
-        datapoint.Plains_Plants = +parseFloat(d.Plains_Plants);
-        datapoint.vid_sec = +parseInt(d.vid_sec);
-        datapoint.important = +parseInt(d.interesting);
+            var datapoint = {};
+            datapoint.seconds = d.seconds;
+            datapoint.start = d.start;
+            datapoint.stop = d.stop;
+            datapoint.date = newD;
+            datapoint.Desert_Water = +parseFloat(d.Desert_Water);
+            datapoint.Jungle_Water = +parseFloat(d.Jungle_Water);
+            datapoint.Wetlands_Water = +parseFloat(d.Wetlands_Water);
+            datapoint.Plains_Water = +parseFloat(d.Plains_Water);
+            datapoint.vid_sec = +parseInt(d.vid_sec);
 
-        PLANTS.forEach(function(plant) {
-            LEVELS.forEach(function(level) {
-                var value = plant.replace('Plants', level);
-                datapoint[value] = +parseInt(d[value]);
-            });
+
+            if ((seen.indexOf(d.vid_sec) == -1)) {
+                seen.push(d.vid_sec)
+                fix_seconds.push(seconds)
+            }
+
+            return datapoint;
         });
 
+        waterLevelsAndPeriods = mapped_data;
 
-        var top = ['top1', 'top2', 'top3', 'top4'];
-        var bottom = ['bottom1', 'bottom2', 'bottom3', 'bottom4'];
+        mainChart = new LineChart(
+            data = waterLevelsAndPeriods,
+            width = $('#full_chart').width() - margin.left - margin.right,
+            margin = margin,
+            height = $('#full_chart').height() - margin.top - margin.bottom,
+            colors = COLORS,
+            element = '#full_chart'
+        );
+        mainChart.plotBiomes(BIOMES);
+        mainChart.plotLegend(BIOMES);
 
-        datapoint.top = top.map( function(x) { return (x=='None' ? null : parseInt(d[x]) + 1) }).filter( (v) => v ).map( function(x) { return x-1; });
-        datapoint.bottom = bottom.map( function(x) { return (x=='None' ? null : parseInt(d[x]) + 1) }).filter( (v) => v ).map( function(x) { return x-1; });
-
-        if ((seen.indexOf(d.vid_sec) == -1)) {
-            seen.push(d.vid_sec)
-            fix_seconds.push(seconds)
-        }
-
-        return datapoint;
+        // attach the click handlers:
+        var array_flipped={};
+        $.each(fix_seconds, function(i, el) {
+            array_flipped[el]=parseInt(i);
+        });
+        var data = [array_flipped];
+        video_seconds = array_flipped;
+        mainChart.attachTimeClickHandler(updateVidTime, data);
     });
+}
 
-    waterLevelsAndPeriods = mapped_data;
-
-    mainChart = new LineChart(
-        data = waterLevelsAndPeriods,
-        width = $('#full_chart').width() - margin.left - margin.right,
-        margin = margin,
-        height = $('#full_chart').height() - margin.top - margin.bottom,
-        colors = COLORS,
-        element = '#full_chart'
-    );
-    mainChart.plotBiomes(BIOMES);
-    mainChart.plotLegend(BIOMES);
-
-    // attach the click handlers:
-    var array_flipped={};
-    $.each(fix_seconds, function(i, el) {
-        array_flipped[el]=parseInt(i);
-    });
-    var data = [array_flipped];
-    video_seconds = array_flipped;
-    mainChart.attachTimeClickHandler(updateVidTime, data);
-});
+load_data(file1);
 
 function updateVidTime(time, data) {
     var vid = document.getElementById("globalView");
@@ -277,8 +268,6 @@ function mark_timeseries() {
     });
     if(!added) $(element).appendTo($(target));
 
-    // target.append();
-
     $('#remove_change_button_' + time).click(function() {
         mainChart.removeMarkedChangePoint(time);
         $("#marked_change_points li[id=" + time + "]")[0].remove()
@@ -291,27 +280,88 @@ $('#mark_change_point_button').click(function() {
     mark_timeseries();
 });
 
-$(window).keypress(function (e) {
-    if (e.key === ' ' || e.key === 'Spacebar') {
-        // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
-        e.preventDefault()
-        mark_timeseries();
-    }
-});
+$(document).ready(function() {
+    $(document).keydown(function(e) {
+        if (e.key === "Control") {
+            // ' ' is standard, 'Spacebar' was used by IE9 and Firefox < 37
+            e.preventDefault()
+            mark_timeseries();
+        }
+    });
+})  ;
 
-// var ifrm= $('#pagecontainer>#page').get(0)
-// ifrm.onload=function() {
-//     $(this).fadeIn("slow")
-// }
-//
 function overlay_on() {
     document.getElementById("overlay").style.display = "block";
 }
-//
-// function overlay_off() {
-//     $('div#overlay').load('slideshow.html',function(e){$(this).fadeOut('slow')})
-// }
 
-// $(function(){
-//     $("#overlay").load("slideshow.html");
-// });
+
+$('#completed').on('click', function(e) {
+    e.preventDefault();
+    var finished_state = 1;
+
+    if (completion_state === finished_state-1) {
+        var button = $('#completed');
+        button.empty();
+        button.append('<span class="glyphicon glyphicon-ok"></span> Done Tagging');
+    }
+
+    if (completion_state == finished_state) {
+        finish_experiment();
+    } else {
+        to_next_data();
+        completion_state = completion_state + 1;
+    }
+});
+
+function to_next_data() {
+
+    var next_file = 'data/input_file2_2018-12-01_10-49-03.csv';
+    var target = $('#marked_change_points');
+    var file_data = target.find('li').map(function(){
+        return '' + this.id;
+    }).toArray().join(',');
+
+    console.log(file_data);
+
+    target.find('li').each(function(){ this.remove(); });
+
+    $('svg').remove()
+    load_data(next_file);
+
+    vid.src = "https://s3.amazonaws.com/essil-hdp/videos/test_5.mp4";
+    vid.currentTime = 0;
+    $(vid)[0].load();
+    pause_vid();
+};
+
+function finish_experiment() {
+    var name = $('#name').val();
+
+    if (name.length < 1) { alert('Please fill name'); return false; }
+
+    var target = $('#marked_change_points');
+    var file_data = target.find('li').map(function(){
+        return '' + this.id;
+    }).toArray().join(',');
+
+
+    var data = {
+        'name': name,
+        'file1_changes': file_data,
+        'file2_changes': '123,123,123,123,123,123,213',
+        'file3_changes': '123,123,123,123,123,123,213',
+        'file4_changes': '123,123,123,123,123,123,213',
+        'file5_changes': '123,123,123,123,123,123,213',
+        'datetime': new Date($.now())
+    }
+
+    // data['known_params_json'] = periods
+
+    $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "json",
+        data: data
+    }).success(alert('Done, thanks'));
+}
+

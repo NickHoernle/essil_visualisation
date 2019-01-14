@@ -32,10 +32,9 @@
             background-color: #f2f2f2;
             border: none;
             color: #717171;
-            padding: 15px 32px 15px 32px;
+            padding: 15px 32px;
             width: auto;
             margin: 10px;
-            margin-bottom: 150px;
             opacity: .8;
             font-weight: bold;
             font-size: 18px;
@@ -92,6 +91,10 @@
             -webkit-animation-duration: 1.5s;
             animation-name: fade;
             animation-duration: 1.5s;
+        }
+
+        .bottom_spacing {
+            margin-bottom: 25px;
         }
 
         .content {
@@ -321,10 +324,10 @@
                 This interface presents a session from students interacting with Connected Worlds. Your task is to click the play button and watch the black time marker line and the video as the session plays <b>and to notice when you think a major change in the water flows occurs</b>. You can use the play/pause button, the jump controls or the left and right arrows to navigate through the session.
             </p>
 
-            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark as major change in water flows"</i> button to tag this point in time (you can also use the Spacebar to mark that as a change point).</p>
+            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark as major change in water flows"</i> button to tag this point in time (you can also use the 'm' key to mark that as a change point).</p>
 
             <p>
-                Remember to click the <em>"Done Labelling"</em> button when you are finished.
+                Remember to fill in your name and to click the <em>"Done Labelling"</em> button when you are finished.
             </p>
         </div>
     </div>
@@ -346,11 +349,13 @@
             <!--</figure>-->
         <!--</div>-->
     <!--</div>-->
+    <div class="bottom_spacing">
     <center>
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
         <button class="button" id="control" onclick="navigation()">Next Slide</button>
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </center>
+    </div>
 </div>
 <!--<br>-->
 
