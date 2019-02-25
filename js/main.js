@@ -8,9 +8,19 @@ var COLORS = ['blue', 'red', 'purple', '#00c7ff'];
 Sort out the video stuffs here
  */
 var vid = document.getElementById("globalView");
-var file1 = "data/input_file.csv";
-var file2 = 'data/input_file2_2018-12-01_10-49-03.csv';
-var speed = 3.0;
+var files = [
+    [0, 'data/hdp_test2.csv', 'https://s3.amazonaws.com/essil-hdp/videos/hdp_test2.mp4'],
+    [1, 'data/hdp_test3.csv', 'https://s3.amazonaws.com/essil-hdp/videos/hdp_test3.mp4'],
+    [2, 'data/hdp_test1.csv', 'https://s3.amazonaws.com/essil-hdp/videos/hdp_test1.mp4'],
+    [3, 'data/hdp_test5.csv', 'https://s3.amazonaws.com/essil-hdp/videos/hdp_test5.mp4'],
+    [4, 'data/hdp_test6.csv', 'https://s3.amazonaws.com/essil-hdp/videos/hdp_test6.mp4']
+];
+
+files = shuffle(files);
+
+var completed_data = {};
+
+var speed = 3;
 vid.playbackRate = speed;
 var completion_state = 0;
 var url = 'https://script.google.com/macros/s/AKfycbyM7-cO2Aa3nKKJcwWT2WUz4AXKpPKwVXZNvrWRL9qns6h7Mcg/exec';
@@ -37,6 +47,13 @@ var mainChart = null;
 var plantsChart = null;
 var plotted_main_periods = false;
 var video_seconds = [];
+
+
+load_data(files[0][1]);
+vid.src = files[0][2];
+vid.currentTime = 0;
+$(vid)[0].load();
+pause_vid();
 
 function pad(value) {
     if(value < 10) {
@@ -82,10 +99,8 @@ function load_data(file) {
             return datapoint;
         });
 
-        waterLevelsAndPeriods = mapped_data;
-
         mainChart = new LineChart(
-            data = waterLevelsAndPeriods,
+            data = mapped_data,
             width = $('#full_chart').width() - margin.left - margin.right,
             margin = margin,
             height = $('#full_chart').height() - margin.top - margin.bottom,
@@ -100,13 +115,11 @@ function load_data(file) {
         $.each(fix_seconds, function(i, el) {
             array_flipped[el]=parseInt(i);
         });
-        var data = [array_flipped];
+        var dat = [array_flipped];
         video_seconds = array_flipped;
-        mainChart.attachTimeClickHandler(updateVidTime, data);
+        mainChart.attachTimeClickHandler(updateVidTime, dat);
     });
 }
-
-load_data(file1);
 
 function updateVidTime(time, data) {
     var vid = document.getElementById("globalView");
@@ -214,6 +227,7 @@ function play_vid() {
     var global_view = $('#globalView')[0];
     $('#play-pause')[0].setAttribute('playing', 'true');
     $('#play-pause').html("<span class='glyphicon glyphicon-pause'></span> Pause");
+    vid.playbackRate = speed;
     global_view.play();
 }
 
@@ -242,14 +256,14 @@ $('#step_left_button').click(function() {
     pause_vid();
     vid = $('#globalView')[0];
     vid.currentTime = vid.currentTime - 1;
-    play_vid();
+    pause_vid();
 });
 
 $('#step_right_button').click(function() {
     pause_vid();
     vid = $('#globalView')[0];
     vid.currentTime = vid.currentTime + 1;
-    play_vid();
+    pause_vid();
 });
 
 function mark_timeseries() {
@@ -297,25 +311,36 @@ function overlay_on() {
 
 $('#completed').on('click', function(e) {
     e.preventDefault();
-    var finished_state = 1;
 
-    if (completion_state === finished_state-1) {
-        var button = $('#completed');
-        button.empty();
+    var button = $('#completed');
+    var finished_state = files.length-1;
+
+    var target = $('#marked_change_points');
+    var file_data = target.find('li').map(function(){
+        return '' + this.id;
+    }).toArray().join(',');
+
+    completed_data[files[completion_state][0]] = file_data;
+
+    button.empty();
+
+    if (completion_state >= finished_state-1) {
         button.append('<span class="glyphicon glyphicon-ok"></span> Done Tagging');
+    } else {
+        button.append('<span class="glyphicon glyphicon-arrow-right"></span> To Next Session (' + (completion_state + 3) + '/' + (finished_state + 1) + ')');
     }
 
-    if (completion_state == finished_state) {
+    if (completion_state === finished_state) {
         finish_experiment();
     } else {
-        to_next_data();
         completion_state = completion_state + 1;
+        to_next_data(files[completion_state]);
     }
 });
 
-function to_next_data() {
+function to_next_data(data) {
 
-    var next_file = 'data/input_file2_2018-12-01_10-49-03.csv';
+    var next_file = data[1];
     var target = $('#marked_change_points');
     var file_data = target.find('li').map(function(){
         return '' + this.id;
@@ -328,7 +353,7 @@ function to_next_data() {
     $('svg').remove()
     load_data(next_file);
 
-    vid.src = "https://s3.amazonaws.com/essil-hdp/videos/test_5.mp4";
+    vid.src = data[2];
     vid.currentTime = 0;
     $(vid)[0].load();
     pause_vid();
@@ -339,29 +364,50 @@ function finish_experiment() {
 
     if (name.length < 1) { alert('Please fill name'); return false; }
 
-    var target = $('#marked_change_points');
-    var file_data = target.find('li').map(function(){
-        return '' + this.id;
-    }).toArray().join(',');
-
-
     var data = {
         'name': name,
-        'file1_changes': file_data,
-        'file2_changes': '123,123,123,123,123,123,213',
-        'file3_changes': '123,123,123,123,123,123,213',
-        'file4_changes': '123,123,123,123,123,123,213',
-        'file5_changes': '123,123,123,123,123,123,213',
+        'file1_changes': completed_data[0],
+        'file2_changes': completed_data[1],
+        'file3_changes': completed_data[2],
+        'file4_changes': completed_data[3],
+        'file5_changes': completed_data[4],
         'datetime': new Date($.now())
     }
 
     // data['known_params_json'] = periods
+    var page = $('#page_container');
+    $('.row').each(function(){ this.remove(); });
+    page.append('<div class="to_delete"><center><h1><span class="glyphicon glyphicon-refresh"></span> Please Wait...</h1></center></div>')
 
     $.ajax({
         url: url,
         method: "GET",
         dataType: "json",
         data: data
-    }).success(alert('Done, thanks'));
+    }).done(function(){
+        $('.to_delete').each(function(){ this.remove(); });
+        page.append('<center>' +
+            '<h1>Thanks very much!</h1>' +
+            '<p><em>Exit this webpage to finish</em></p>' +
+            '</center>');
+    });
 }
 
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}

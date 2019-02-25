@@ -108,7 +108,7 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            max-width: 100%;
+            max-width: 60%;
             margin-top: auto;
         }
 
@@ -124,6 +124,14 @@
         }
 
         p {
+            font-family: 'Karla';
+            font-size: x-large;
+            font-weight: normal;
+            color: #717171;
+            margin: 50px;
+        }
+
+        ul {
             font-family: 'Karla';
             font-size: x-large;
             font-weight: normal;
@@ -237,32 +245,33 @@
         <div class="numbertext">1 / </div>
         <div class="content">
             <h1>
-                Experiment Overview
+                Experiment Goal
             </h1>
             <p>
-                The goal of this experiment is to investigate how people deconstruct and make sense of temporal data.
+                In this study you will help us to validate algorithms for interpreting students' activities in a simulated ecosystem called Connected Worlds (CW).
             </p>
             <p>
-                We will show you some data that comes from a simulated learning environment in New York where school students have worked to control the flows of water in a closed system over time. Below you see a representation of the water flows in the system and a line graph that shows the level of water in the four biomes (areas) of the simulation.
+                <!--We will show you some data that comes from a museum exhibit in New York. This exhibit is a simulated ecosystem, where school students move physical logs around on a floor. The exhibit has simulated streams of water that are projected onto the floor. The streams change direction when they flow into the logs.  Students can thereby use the logs to decide where to route water within the ecosystem. This matters, because plants and animals living in the simulated ecosystem need water to survive and thrive. Below you see an image taken from the Connected Worlds Environment where you can see students standing in the space and interacting with the simulation. You also see a bird's-eye representation of the water streams in the system that are a result of how the students position the logs on the floor.-->
+                CW is a mixed-reality simulation, where school students move physical logs around on a floor. CW has simulated streams of water that are projected onto the floor. The streams change direction when they flow into the logs. Students can thereby use the logs to decide where to route water within the ecosystem. This matters, because plants and animals living in the simulated ecosystem need water to survive and thrive.
+            </p>
+            <p>
+                Below you see an image taken from CW where you can see students standing in the space and interacting with the simulation. You also see a bird's-eye representation of the water streams in the system that are a result of how the students position the logs on the floor.
+
             </p>
             <div class="wrapper">
                 <div class="leftBox">
                     <figure>
-                        <img src="slide_show_images/image_1.png" class="center" align="bottom">
-                        <figcaption>Schematic of Connected Worlds</figcaption>
+                        <img src="slide_show_images/image_0.jpg" class="center" align="bottom">
+                        <figcaption>Picture of Students Interacting with Connected Worlds</figcaption>
                     </figure>
                 </div>
                 <div class="rightBox">
                     <figure>
-                        <img src="slide_show_images/image_2.png" class="center" align="bottom">
-                        <figcaption>Line Graph showing the water levels in the four Biomes of Connected Worlds</figcaption>
+                        <img src="slide_show_images/image_1.png" class="center" align="bottom">
+                        <figcaption>Schematic of Connected Worlds from Bird's-eye View</figcaption>
                     </figure>
                 </div>
             </div>
-
-            <p>
-                Your task is to identify points in time where the flows of water in the simulation change significantly.
-            </p>
         </div>
     </div>
 
@@ -273,7 +282,7 @@
                 Description of Connected Worlds
             </h1>
             <p>
-                Connected Worlds is a simulated environment where the students control water flows and plant trees that allow animals to flourish. It consists of <b>water sources</b> (<em>the Waterfall, the Mountain Valley and the Reservoir</em>) and <b>four biomes</b> (<em>the Desert, the Plains, the Jungle and the Wetlands</em>) where the trees grow and the animals find their habitat. The students interact on the <b>floor</b> and move the red logs to redirect water to the four biomes such that life can be sustained.
+                Connected Worlds is a simulated environment where the students control water flows and plant trees that allow animals to flourish. It consists of <b>water sources</b> (<em>the Waterfall, the Mountain Valley and the Reservoir</em>) and <b>four biomes</b> (<em>the Desert, the Plains, the Jungle and the Wetlands</em>) where the trees grow and the animals find their habitat. The students move the logs (<em>colored red in the image below</em>) to redirect water (<em>colored blue in the image below</em>) to the four biomes such that life can be sustained.
             </p>
 
             <figure>
@@ -287,25 +296,41 @@
         <div class="numbertext">3 / </div>
         <div class="content">
             <h1>
-                Description of Water Level Graph
+               Your Task
             </h1>
             <p>
-                The line graph shows the level of water in the four biomes. When the students make a decision to re-route water in the simulation, we see the corresponding water in a biome rise if the biome was targeted, or drop if the water was directed away from the biome.
+                We have recorded the changes that students made over time to the way water is routed in CW, and have created visualizations of these changes. <b>Your task is to identify points in time when the flow of water in the simulation undergoes a substantial change.</b> We leave it to you to decide when a change in the water flow is substantial.
             </p>
 
-            <p>
-                The image below has a red line marked where the water in the Jungle changes from a rising trend to a trend that is decreasing. The video can be consulted to confirm that the students redirected one of the logs that caused this dramatic change in the water level.
-            </p>
-
-            <figure>
-                <img src="slide_show_images/image_4.png" class="center" align="bottom">
-                <figcaption>Example of one change where the Jungle water changes from increasing to decreasing</figcaption>
-            </figure>
         </div>
     </div>
 
     <div class="mySlides fade">
         <div class="numbertext">4 / </div>
+        <div class="content">
+            <h1>
+                Description of Visualizations
+            </h1>
+            <p>
+                The line graph shows the level of water in the four biomes. <b>The water levels in a biome increase when</b>: students move logs to route water toward the biome. <b>The water levels decrease when:</b> students move logs to route water away from the biome and evaporation occurs or plants in the biome use the available water.
+            </p>
+            <p>
+                The line graph below shows an example of water levels in a single session where students interact with CW. We are interested in steady trends of the water flows. You can find points in time when the trends in water levels change; these can be seen by changes to the slope of the line. It is important to note that sometimes the water is hard to control and it splashes around the simulation. Small changes to the slopes of the lines are therefore not caused by the students making <b>substantial</b> changes to the logs.
+            </p>
+
+            <figure>
+                <img src="slide_show_images/image_2.png" class="center" align="bottom">
+                <figcaption>Example of Water Levels in Connected Worlds</figcaption>
+            </figure>
+
+            <p>
+            However, the water level chart is not your only source of information. You can also look at the birds-eye video to see how the students are manipulating the logs to change the water routing. It is a good idea to refer to the line graph first and then only validate that with the video as the students often move logs that might not change the water flows (thus distracting your focus).
+            </p>
+        </div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">5 / </div>
         <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
         <div class="content">
             <h1>
@@ -317,14 +342,28 @@
 
             <figure>
                 <img src="slide_show_images/image_5.png" class="center" align="bottom">
-                <figcaption>Interface description</figcaption>
+                <figcaption>Interface depiction</figcaption>
             </figure>
 
             <p>
-                This interface presents a session from students interacting with Connected Worlds. Your task is to click the play button and watch the black time marker line and the video as the session plays <b>and to notice when you think a major change in the water flows occurs</b>. You can use the play/pause button, the jump controls or the left and right arrows to navigate through the session.
+                This interface presents a session from students interacting with Connected Worlds. Your task is to identify points in time when the flow of water in the simulation undergoes a substantial change. <b>This can be done by noticing points in time where there is a substantial change in the slopes of the water levels in the biomes</b>.
             </p>
 
-            <p>When you think a large change occurs, then pause the video and use the left/right arrow buttons to position the black cursor over the time that the change occured. Click the <i>"Mark as major change in water flows"</i> button to tag this point in time (you can also use the 'm' key to mark that as a change point).</p>
+              <p>You can perform this task by clicking the "play" button at the top left of the interface. You can use the "play/pause" button, the "jump to" control or the left and right arrows to navigate through the session. The black vertical line in the graph is synchronized with the video: it indicates the time of the current frame of the session playback video. You can click on the line graph to move the black vertical playback line thereby navigating to any time in the session.
+            </p>
+        </div>
+    </div>
+
+    <div class="mySlides fade">
+        <div class="numbertext">6 / </div>
+        <!--<img src="img_mountains_wide.jpg" style="width:100%">-->
+        <div class="content">
+            <h1>
+                How to record your results
+            </h1>
+            <p>
+                When you think you have located a moment when a meaningful change occurs, pause the video and use the arrow buttons to position the black cursor over the point in time that best indicates when the change occurred (<em>you can also consult the video to confirm the change in the water flows</em>). Click the <b>"Mark as major change in water trends"</b> button to tag this point in time (alternatively, press the "Ctrl" button). If you change your mind, you can always delete the change points you have added by pressing the <em><b>X</b></em> button. You do not need to enter your change points in any particular order – you can skip around the session as you add them. A session usually has 5 to 15 changes.
+            </p>
 
             <p>
                 Remember to fill in your name and to click the <em>"Done Labelling"</em> button when you are finished.
@@ -368,7 +407,7 @@
 </body>
 
 <script>
-    var num_slides = 4;
+    var num_slides = 6;
     $('.numbertext').append('' + num_slides);
 
     var slideIndex = 1;
@@ -378,6 +417,7 @@
     function plusSlides(n) {
         showSlides(slideIndex += n);
         button_state(false);
+        window.scrollTo(0,0);
     }
 
     function currentSlide(n) {
@@ -385,6 +425,7 @@
     }
 
     function button_state(pressed) {
+        window.scrollTo(0,0);
         if (slides_seen == true) {
             $('#control').text('Got it! Take me to the experiment.');
             if (pressed){ window.parent.document.getElementById("overlay").style.display = "none"; }
