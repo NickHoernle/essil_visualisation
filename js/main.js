@@ -72,6 +72,11 @@ d3.csv("data/input_file.csv", function(error, data) {
         datapoint.vid_sec = +parseInt(d.vid_sec);
         datapoint.important = +parseInt(d.interesting);
 
+        datapoint.Desert_regime = +parseInt(d.Desert_regime);
+        datapoint.Plains_regime = +parseInt(d.Plains_regime);
+        datapoint.Wetlands_regime = +parseInt(d.Wetlands_regime);
+        datapoint.Jungle_regime = +parseInt(d.Jungle_regime);
+
         PLANTS.forEach(function(plant) {
             LEVELS.forEach(function(level) {
                 var value = plant.replace('Plants', level);
@@ -96,15 +101,15 @@ d3.csv("data/input_file.csv", function(error, data) {
 
     waterLevelsAndPeriods = mapped_data;
 
-    zoomedChart = new LineChart(
-        data = waterLevelsAndPeriods,
-        width = $('#zoomed_chart').width() - margin.left - margin.right,
-        margin = margin,
-        height = $('#zoomed_chart').height() - margin.top - margin.bottom,
-        colors = COLORS,
-        element = '#zoomed_chart'
-    );
-    zoomedChart.plotLegend(BIOMES);
+    // zoomedChart = new LineChart(
+    //     data = waterLevelsAndPeriods,
+    //     width = $('#zoomed_chart').width() - margin.left - margin.right,
+    //     margin = margin,
+    //     height = $('#zoomed_chart').height() - margin.top - margin.bottom,
+    //     colors = COLORS,
+    //     element = '#zoomed_chart'
+    // );
+    // zoomedChart.plotLegend(BIOMES);
 
     mainChart = new LineChart(
         data = waterLevelsAndPeriods,
@@ -117,15 +122,15 @@ d3.csv("data/input_file.csv", function(error, data) {
     mainChart.plotBiomes(BIOMES);
     mainChart.plotLegend(BIOMES);
 
-    plantsChart = new LineChart(
-        data = waterLevelsAndPeriods,
-        width = $('#plants_chart').width() - margin.left - margin.right,
-        margin = margin,
-        height = $('#plants_chart').height() - margin.top - margin.bottom,
-        colors = COLORS,
-        element = '#plants_chart'
-    );
-    plantsChart.plotLegend( getActivePlants() );
+    // plantsChart = new LineChart(
+    //     data = waterLevelsAndPeriods,
+    //     width = $('#plants_chart').width() - margin.left - margin.right,
+    //     margin = margin,
+    //     height = $('#plants_chart').height() - margin.top - margin.bottom,
+    //     colors = COLORS,
+    //     element = '#plants_chart'
+    // );
+    // plantsChart.plotLegend( getActivePlants() );
 
     // attach the click handlers:
     var array_flipped={};
@@ -134,8 +139,8 @@ d3.csv("data/input_file.csv", function(error, data) {
     });
     var data = [array_flipped];
     mainChart.attachTimeClickHandler(updateVidTime, data);
-    zoomedChart.attachTimeClickHandler(updateVidTime, data);
-    plantsChart.attachTimeClickHandler(updateVidTime, data);
+    // zoomedChart.attachTimeClickHandler(updateVidTime, data);
+    // plantsChart.attachTimeClickHandler(updateVidTime, data);
 });
 
 d3.csv("data/images.csv", function(data) {
@@ -165,19 +170,19 @@ function updateCharts(time) {
         plotted_main_periods = true;
     }
 
-    zoomedChart.plotBiomes(BIOMES, time-30, time+70);
-    plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
+    // zoomedChart.plotBiomes(BIOMES, time-30, time+70);
+    // plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
 
     mainChart.plotTimeTracker(time);
-    zoomedChart.plotTimeTracker(time);
-    plantsChart.plotTimeTracker(time);
+    // zoomedChart.plotTimeTracker(time);
+    // plantsChart.plotTimeTracker(time);
 
-    zoomedChart.plotActiveRegions(time, true);
-    plantsChart.plotActiveRegions(time, true);
+    // zoomedChart.plotActiveRegions(time, true);
+    // plantsChart.plotActiveRegions(time, true);
 
     mainChart.plotFocus(time);
 
-    plantsChart.plotLegend( getActivePlants() );
+    // plantsChart.plotLegend( getActivePlants() );
 
     $('#top_biomes').empty();
     waterLevelsAndPeriods[time].top.forEach( function(x) {
@@ -190,8 +195,14 @@ function updateCharts(time) {
 }
 
 vid.ontimeupdate = function() {
-    var time = fix_seconds[parseInt(vid.currentTime)]+1;
+    var vid_time = parseInt(vid.currentTime)
+    var time = fix_seconds[vid_time]+1;
     updateCharts(time);
+
+    $(document).ready(function() {
+        set_time(vid_time)
+    });
+
     $('#time').text('Video Time: ' + get_time_string(time));
     var vidTime = parseInt(vid.currentTime);
     $('#representative_image img').attr('src', images[vidTime]);
