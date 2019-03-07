@@ -3,6 +3,16 @@
  */
 
 var format = d3.timeFormat("%M:%S")
+var regime_map = {
+    "Desert_important_down":   "Desert_regime",
+    "Plains_important_down":   "Plains_regime",
+    "Jungle_important_down":   "Jungle_regime",
+    "Wetlands_important_down": "Wetlands_regime",
+    "Desert_important_up":   "Desert_regime",
+    "Plains_important_up":   "Plains_regime",
+    "Jungle_important_up":   "Jungle_regime",
+    "Wetlands_important_up": "Wetlands_regime"
+}
 
 function plot_line(biome, x, y) {
     return d3.line()
@@ -75,6 +85,7 @@ class LineChart  {
             .attr("class", "line")
             .attr("class", this.lineStyle(biome))
             .style('stroke', this.colors(biome))
+            .style("stroke-width", 3)
             .attr("d", val_line(data));
     }
 
@@ -129,9 +140,34 @@ class LineChart  {
         }, this);
     }
 
-    plotActiveRegions (start, moving) {
-        var area_start = this.data[start].start;
-        var area_stop = this.data[start].stop;
+    plotActiveRegions (start, moving, selected) {
+
+        var time = start;
+        var end_time = start;
+        var important = false;
+
+        while (time < this.data.length-1) {
+            var finished = false;
+            time += 1;
+            selected.forEach(function(x) {
+                if (this.data[start][regime_map[x]] != this.data[time][regime_map[x]]) {
+                    if (this.data[start][x] >= 1) {
+                        finished = true;
+                    }
+                }
+                if (this.data[start][x] >= 1) {
+                    important = true;
+                }
+            }, this);
+
+            if (finished) {
+                end_time = time;
+                break;
+            }
+        }
+
+        var area_start = start;
+        var area_stop = end_time;
 
         var ixs = d3.range(area_start, area_stop).map(function (d) {
             var dte = new Date(2014, 4, 1);
@@ -142,12 +178,14 @@ class LineChart  {
             return newD
         });
 
-        if (this.data[start]['important'] == true) {
+        if (important == true) {
             this.plotActiveRegion(ixs, moving, area_start);
         } else {
             var a_s = area_start == 0 ? 1 : area_start;
             this.plotActiveRegion(ixs, moving, a_s, '_not_important');
         }
+
+        return end_time;
     }
 
     plotFocus (start) {
@@ -199,8 +237,8 @@ class LineChart  {
     plotLegend (biomes) {
 
         var legendRectHeight = 10;
-        var legendRectWidth = 60;
-        var legendSpacing = 55;
+        var legendRectWidth = 80;
+        var legendSpacing = 65;
         var colors = this.colors;
 
         this.svg.selectAll('.legend').remove();
@@ -217,7 +255,7 @@ class LineChart  {
                     })
                     .style("font-family", "sans-serif")
                     .style("font-size", "12px")
-                    .text(d.replace('_', ' '));
+                    .text(d.replace('_', ' ').replace('Plains', 'Grasslands'));
 
             // adds line in the same color as used in the graph
             var thisItem = d3.select("#legend-text-" + i).node();

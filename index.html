@@ -31,58 +31,37 @@
 
         <div class="row">
             <div class="column1">
-                <!--<table class="controls">-->
-                    <!--<thead style="font-weight: bold;">-->
-                    <!--<tr>-->
-                        <!--<td></td>-->
-                        <!--<td colspan="4" style="text-align: center">Biomes</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>Plant Level</td>-->
-                        <!--<td>Desert</td>-->
-                        <!--<td>Plains</td>-->
-                        <!--<td>Jungle</td>-->
-                        <!--<td>Wetlands</td>-->
-                    <!--</tr>-->
-                    <!--</thead>-->
-                    <!--<tbody style="vertical-align: bottom;">-->
-                    <!--<tr>-->
-                        <!--<td>Level 1</td>-->
-                        <!--<td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_1"></td>-->
-                        <!--<td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_1"></td>-->
-                        <!--<td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_1"></td>-->
-                        <!--<td><input type="checkbox" checked aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_1"></td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>Level 2</td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_2"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_2"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_2"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_2"></td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>Level 3</td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_3"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_3"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_3"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_3"></td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>Level 4</td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_desert_plant_4"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_plains_plant_4"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_jungle_plant_4"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox" id="checkbox_wetlands_plant_4"></td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>All</td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_desert"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_plains"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_jungle"></td>-->
-                        <!--<td><input type="checkbox" aria-label="label" class="plant_checkbox_all" id="checkbox_all_wetlands"></td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
+                <table class="controls">
+                    <thead style="font-weight: bold;">
+                    <tr>
+                        <td></td>
+                        <td colspan="4" style="text-align: center">Biomes</td>
+                    </tr>
+                    <tr>
+                        <td>Water Level</td>
+                        <td>Desert</td>
+                        <td>Plains</td>
+                        <td>Jungle</td>
+                        <td>Wetlands</td>
+                    </tr>
+                    </thead>
+                    <tbody style="vertical-align: bottom;">
+                    <tr>
+                        <td>Increasing</td>
+                        <td><input type="checkbox" aria-label="label" regime="Desert_regime" class="checkbox" id="Desert_important_up"></td>
+                        <td><input type="checkbox" aria-label="label" regime="Plains_regime" class="checkbox" id="Plains_important_up"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="checkbox" id="Jungle_important_up"></td>
+                        <td><input type="checkbox" aria-label="label" regime="Wetlands_regime" class="checkbox" id="Wetlands_important_up"></td>
+                    </tr>
+                    <tr>
+                        <td>Decreasing</td>
+                        <td><input type="checkbox" aria-label="label" regime="Desert_regime" class="checkbox" id="Desert_important_down"></td>
+                        <td><input type="checkbox" aria-label="label" regime="Plains_regime" class="checkbox" id="Plains_important_down"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="checkbox" id="Jungle_important_down"></td>
+                        <td><input type="checkbox" aria-label="label" regime="Wetlands_regime" class="checkbox" id="Wetlands_important_down"></td>
+                    </tr>
+                    </tbody>
+                </table>
 
                 <div id="video">
                     <p id='time'>Video Time: 00:00</p>

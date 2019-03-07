@@ -1,7 +1,7 @@
 var BIOMES = ['Desert_Water', 'Plains_Water', 'Jungle_Water', 'Wetlands_Water']
 var PLANTS = ['Desert_Plants', 'Plains_Plants', 'Jungle_Plants', 'Wetlands_Plants']
 var LEVELS = ['lv1', 'lv2', 'lv3', 'lv4']
-var COLORS = ['blue', 'red', 'purple', 'cyan'];
+var COLORS = ['#b58900', '#2aa198', '#d33682', '#6c71c4'];
 
 
 /*
@@ -58,8 +58,8 @@ d3.csv("data/input_file.csv", function(error, data) {
 
         var datapoint = {};
         datapoint.seconds = d.seconds;
-        datapoint.start = d.start;
-        datapoint.stop = d.stop;
+        // datapoint.start = d.start;
+        // datapoint.stop = d.stop;
         datapoint.date = newD;
         datapoint.Desert_Water = +parseFloat(d.Desert_Water);
         datapoint.Jungle_Water = +parseFloat(d.Jungle_Water);
@@ -69,34 +69,42 @@ d3.csv("data/input_file.csv", function(error, data) {
         datapoint.Jungle_Plants = +parseFloat(d.Jungle_Plants);
         datapoint.Wetlands_Plants = +parseFloat(d.Wetlands_Plants);
         datapoint.Plains_Plants = +parseFloat(d.Plains_Plants);
-        datapoint.vid_sec = +parseInt(d.vid_sec);
-        datapoint.important = +parseInt(d.interesting);
+        datapoint.vid_sec = +parseInt(d._video_seconds);
+        // datapoint.important = +parseInt(d.interesting);
 
-        datapoint.Desert_regime = +parseInt(d.Desert_regime);
-        datapoint.Plains_regime = +parseInt(d.Plains_regime);
-        datapoint.Wetlands_regime = +parseInt(d.Wetlands_regime);
-        datapoint.Jungle_regime = +parseInt(d.Jungle_regime);
+        datapoint.Desert_important_up = +parseInt(d.interesting_upper_Desert);
+        datapoint.Plains_important_up = +parseInt(d.interesting_upper_Plains);
+        datapoint.Jungle_important_up = +parseInt(d.interesting_upper_Jungle);
+        datapoint.Wetlands_important_up = +parseInt(d.interesting_upper_Wetlands);
 
-        PLANTS.forEach(function(plant) {
-            LEVELS.forEach(function(level) {
-                var value = plant.replace('Plants', level);
-                datapoint[value] = +parseInt(d[value]);
-            });
-        });
+        datapoint.Desert_important_down = +parseInt(d.interesting_lower_Desert);
+        datapoint.Plains_important_down = +parseInt(d.interesting_lower_Plains);
+        datapoint.Jungle_important_down = +parseInt(d.interesting_lower_Jungle);
+        datapoint.Wetlands_important_down = +parseInt(d.interesting_lower_Wetlands);
 
+        datapoint.theta_Desert = +parseInt(d.theta_Desert);
+        datapoint.theta_Plains = +parseInt(d.theta_Plains);
+        datapoint.theta_Jungle = +parseInt(d.theta_Jungle);
+        datapoint.theta_Wetlands = +parseInt(d.theta_Wetlands);
 
-        var top = ['top1', 'top2', 'top3', 'top4'];
-        var bottom = ['bottom1', 'bottom2', 'bottom3', 'bottom4'];
+        datapoint.Desert_regime = +parseInt(d.Desert_specific_regime);
+        datapoint.Plains_regime = +parseInt(d.Plains_specific_regime);
+        datapoint.Jungle_regime = +parseInt(d.Jungle_specific_regime);
+        datapoint.Wetlands_regime = +parseInt(d.Wetlands_specific_regime);
 
-        datapoint.top = top.map( function(x) { return (x=='None' ? null : parseInt(d[x]) + 1) }).filter( (v) => v ).map( function(x) { return x-1; });
-        datapoint.bottom = bottom.map( function(x) { return (x=='None' ? null : parseInt(d[x]) + 1) }).filter( (v) => v ).map( function(x) { return x-1; });
+        // PLANTS.forEach(function(plant) {
+        //     LEVELS.forEach(function(level) {
+        //         var value = plant.replace('Plants', level);
+        //         datapoint[value] = +parseInt(d[value]);
+        //     });
+        // });
 
-        if ((seen.indexOf(d.vid_sec) == -1)) {
-            seen.push(d.vid_sec)
+        if ((seen.indexOf(d._video_seconds) == -1)) {
+            seen.push(d._video_seconds)
             fix_seconds.push(seconds)
         }
 
-        return datapoint;
+        return datapoint;s
     });
 
     waterLevelsAndPeriods = mapped_data;
@@ -163,10 +171,19 @@ function updateVidTime(time, data) {
 function updateCharts(time) {
 
     if ((time <= 1) | (plotted_main_periods == false)) {
-        waterLevelsAndPeriods.forEach(function(x) {
-            var time = x.seconds;
-            mainChart.plotActiveRegions(time, false);
-        });
+        var start = 0;
+        while (start < waterLevelsAndPeriods.length-1) {
+
+            var selected = [];
+            $.each($("input[class='checkbox']:checked"), function(){
+                if ($(this).val() == 'on') {
+                    selected.push($(this).attr('id'));
+                }
+            });
+
+            start = mainChart.plotActiveRegions(start, false, selected);
+            start += 1;
+        }
         plotted_main_periods = true;
     }
 
@@ -180,18 +197,18 @@ function updateCharts(time) {
     // zoomedChart.plotActiveRegions(time, true);
     // plantsChart.plotActiveRegions(time, true);
 
-    mainChart.plotFocus(time);
+    // mainChart.plotFocus(time);
 
     // plantsChart.plotLegend( getActivePlants() );
 
-    $('#top_biomes').empty();
-    waterLevelsAndPeriods[time].top.forEach( function(x) {
-        $('#top_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
-    });
-    $('#bottom_biomes').empty();
-    waterLevelsAndPeriods[time].bottom.forEach( function(x) {
-        $('#bottom_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
-    });
+    // $('#top_biomes').empty();
+    // waterLevelsAndPeriods[time].top.forEach( function(x) {
+    //     $('#top_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
+    // });
+    // $('#bottom_biomes').empty();
+    // waterLevelsAndPeriods[time].bottom.forEach( function(x) {
+    //     $('#bottom_biomes').append($('<li>'+BIOMES[x].replace('_Water', ' ')+'</li>').css('color', COLORS[x]));
+    // });
 }
 
 vid.ontimeupdate = function() {
@@ -226,11 +243,15 @@ function getActivePlants() {
     })).toArray();
 };
 
-$('.plant_checkbox').each(function(i, box) {
+$('.checkbox').each(function(i, box) {
     $(box).change(function() {
-        var time = fix_seconds[parseInt(vid.currentTime)];
-        plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
-        plantsChart.plotLegend( getActivePlants() );
+        $('.area_not_important').remove();
+        $('.area').remove();
+        plotted_main_periods=false;
+
+        var vid_time = parseInt(vid.currentTime);
+        var time = fix_seconds[vid_time];
+        updateCharts(time);
     });
 });
 
