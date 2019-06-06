@@ -82,7 +82,7 @@ table {
 }
 
 #video {
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     align-items: center;
     text-align: center;
@@ -159,9 +159,24 @@ table #detailed_information {
     outline-color: rgba(255, 0, 202, 0.4);;
 }
 
+.area_raining {
+    fill: #1919de;
+    opacity: 0.4;
+}
+
+.area_up {
+    fill: #12de19;
+    opacity: 0.3;
+}
+
+.area_down {
+    fill: #de062b;
+    opacity: 0.3;
+}
+
 .area_view_window {
     fill: #8bdeda;
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
 div.tooltip {
@@ -184,7 +199,7 @@ div.tooltip {
     vertical-align: middle;
     height: 100%;
     width: 100%;
-    max-height: 450px;
+    max-height: 400px;
     cursor: pointer;
 }
 
@@ -351,7 +366,7 @@ video {
     width: inherit;
 }
 
-body { font: 12px Arial;}
+body { font: 11px Arial;}
 
 path {
     /*stroke: steelblue;*/
@@ -429,7 +444,7 @@ textarea {
 }
 
 .h5, h5 {
-    font-size: 20px;
+    font-size: 18px;
 }
 /*
  * Hide only visually, but have it available for screen readers:

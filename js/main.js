@@ -70,12 +70,16 @@ d3.csv("data/input_file.csv", function(error, data) {
         datapoint.Wetlands_Plants = +parseFloat(d.Wetlands_Plants);
         datapoint.Plains_Plants = +parseFloat(d.Plains_Plants);
         datapoint.vid_sec = +parseInt(d._video_seconds);
-        // datapoint.important = +parseInt(d.interesting);
 
         datapoint.Desert_important_up = +parseInt(d.interesting_upper_Desert);
         datapoint.Plains_important_up = +parseInt(d.interesting_upper_Plains);
         datapoint.Jungle_important_up = +parseInt(d.interesting_upper_Jungle);
         datapoint.Wetlands_important_up = +parseInt(d.interesting_upper_Wetlands);
+
+        datapoint.Desert_Raining = +parseInt(d.Desert_Raining);
+        datapoint.Plains_Raining = +parseInt(d.Plains_Raining);
+        datapoint.Jungle_Raining = +parseInt(d.Jungle_Raining);
+        datapoint.Wetlands_Raining = +parseInt(d.Wetlands_Raining);
 
         datapoint.Desert_important_down = +parseInt(d.interesting_lower_Desert);
         datapoint.Plains_important_down = +parseInt(d.interesting_lower_Plains);
@@ -104,7 +108,7 @@ d3.csv("data/input_file.csv", function(error, data) {
             fix_seconds.push(seconds)
         }
 
-        return datapoint;s
+        return datapoint;
     });
 
     waterLevelsAndPeriods = mapped_data;
@@ -175,7 +179,12 @@ function updateCharts(time) {
         while (start < waterLevelsAndPeriods.length-1) {
 
             var selected = [];
-            $.each($("input[class='checkbox']:checked"), function(){
+            $.each($("input[class='r_checkbox']:checked"), function(){
+                if ($(this).val() == 'on') {
+                    selected.push($(this).attr('id'));
+                }
+            });
+            $.each($("input[class='w_checkbox']:checked"), function(){
                 if ($(this).val() == 'on') {
                     selected.push($(this).attr('id'));
                 }
@@ -243,16 +252,43 @@ function getActivePlants() {
     })).toArray();
 };
 
-$('.checkbox').each(function(i, box) {
+function on_box_click(box) {
     $(box).change(function() {
         $('.area_not_important').remove();
         $('.area').remove();
+        $('.area_up').remove();
+        $('.area_down').remove();
+        $('.area_raining').remove();
+
         plotted_main_periods=false;
 
         var vid_time = parseInt(vid.currentTime);
         var time = fix_seconds[vid_time];
         updateCharts(time);
+
+        // disable all check boxes for other biomes
+        var checked = '';
+        $('.r_checkbox').each(function(){
+            $(this).removeAttr("disabled");
+            if (this.checked) {
+                checked = this.getAttribute('regime');
+            }
+        });
+
+        if (checked != '') {
+            $('.r_checkbox').each(function(){
+                if (this.getAttribute('regime') != checked) {
+                    $(this).attr("disabled", true);
+                }
+            });
+        }
     });
+}
+$('.r_checkbox').each(function(i, box) {
+    on_box_click(box);
+});
+$('.w_checkbox').each(function(i, box) {
+    on_box_click(box);
 });
 
 $('.plant_checkbox_all').each(function(i, box) {
@@ -267,6 +303,7 @@ $('.plant_checkbox_all').each(function(i, box) {
         var time = fix_seconds[parseInt(vid.currentTime)];
         plantsChart.plotBiomes( getActivePlants() , time-30, time+70);
         plantsChart.plotLegend( getActivePlants() );
+
     });
 });
 
@@ -325,4 +362,21 @@ $('#play-pause').click(function() {
     else {
         play_vid();
     }
+});
+
+$('.water_checkbox').each(function(i, box) {
+    // $('.area_raining').remove();
+
+    $(box).change(function() {
+        mainChart.svg.selectAll("path").filter(function() {
+            return this.getAttributeNames().indexOf('line_type') >= 0;
+        }).remove();
+        var checked = [];
+        $('.water_checkbox').each(function(){
+            if (this.checked) {
+                checked.push(this.getAttribute('regime'));
+            }
+        });
+        mainChart.plotBiomes(checked);
+    });
 });

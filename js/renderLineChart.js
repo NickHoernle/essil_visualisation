@@ -11,7 +11,11 @@ var regime_map = {
     "Desert_important_up":   "Desert_regime",
     "Plains_important_up":   "Plains_regime",
     "Jungle_important_up":   "Jungle_regime",
-    "Wetlands_important_up": "Wetlands_regime"
+    "Wetlands_important_up": "Wetlands_regime",
+    "Wetlands_Raining": "Wetlands_regime",
+    "Desert_Raining": "Desert_regime",
+    "Plains_Raining": "Plains_regime",
+    "Jungle_Raining": "Jungle_regime"
 }
 
 function plot_line(biome, x, y) {
@@ -83,6 +87,7 @@ class LineChart  {
 
         this.svg.append("path")
             .attr("class", "line")
+            .attr("line_type", "biome_water_line")
             .attr("class", this.lineStyle(biome))
             .style('stroke', this.colors(biome))
             .style("stroke-width", 3)
@@ -145,18 +150,36 @@ class LineChart  {
         var time = start;
         var end_time = start;
         var important = false;
+        var class_ = '';
+        var raining = false;
+        var override = false;
 
         while (time < this.data.length-1) {
             var finished = false;
             time += 1;
+
             selected.forEach(function(x) {
                 if (this.data[start][regime_map[x]] != this.data[time][regime_map[x]]) {
                     if (this.data[start][x] >= 1) {
                         finished = true;
+                        if (x.includes('Raining')) {
+                            class_ = '_raining';
+                        }
+                        else if (x.includes('_up')) {
+                            class_ = '_up';
+                        }
+                        else if (x.includes('_down')) {
+                            class_ = '_down';
+                        }
                     }
                 }
                 if (this.data[start][x] >= 1) {
                     important = true;
+                }
+                if (this.data[time][regime_map[x].replace('_regime', '_Raining')] >= 1){
+                    if (selected.indexOf(regime_map[x].replace('_regime', '_Raining')) >= 0){
+                        raining = true;
+                    }
                 }
             }, this);
 
@@ -169,6 +192,10 @@ class LineChart  {
         var area_start = start;
         var area_stop = end_time;
 
+        if (end_time - start <= 10) {
+            important = false;
+        }
+
         var ixs = d3.range(area_start, area_stop).map(function (d) {
             var dte = new Date(2014, 4, 1);
             var u = +dte;
@@ -178,12 +205,18 @@ class LineChart  {
             return newD
         });
 
-        if (important == true) {
-            this.plotActiveRegion(ixs, moving, area_start);
-        } else {
-            var a_s = area_start == 0 ? 1 : area_start;
-            this.plotActiveRegion(ixs, moving, a_s, '_not_important');
+        if (raining == true) {
+            // important = false;
+            class_ = '_raining'
         }
+
+        if (important == true) {
+            this.plotActiveRegion(ixs, moving, area_start, class_);
+        }
+        // else {
+        //     var a_s = area_start == 0 ? 1 : area_start;
+        //     this.plotActiveRegion(ixs, moving, a_s, '_not_important');
+        // }
 
         return end_time;
     }

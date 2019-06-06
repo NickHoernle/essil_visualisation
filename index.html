@@ -31,16 +31,34 @@
 
         <div class="row">
             <div class="column1">
+                <p><b>Select which water levels you'd like to see:</b></p>
                 <table class="controls">
                     <thead style="font-weight: bold;">
                     <tr>
-                        <td></td>
-                        <td colspan="4" style="text-align: center">Biomes</td>
+                        <td>Desert</td>
+                        <td>Grasslands</td>
+                        <td>Jungle</td>
+                        <td>Wetlands</td>
                     </tr>
+                    </thead>
+                    <tbody style="vertical-align: bottom;">
+                    <tr>
+                        <td><input type="checkbox" checked aria-label="label" regime="Desert_Water" class="water_checkbox" id="show_desert_bar"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Plains_Water" class="water_checkbox" id="show_plains_bar"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_Water" class="water_checkbox" id="show_jungle_bar"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Wetlands_Water" class="water_checkbox" id="show_wetlands_bar"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <br/>
+                <p><b>Select to highlight periods when water is:</b></p>
+                <table class="controls">
+                    <thead style="font-weight: bold;">
                     <tr>
                         <td>Water Level</td>
                         <td>Desert</td>
-                        <td>Plains</td>
+                        <td>Grasslands</td>
                         <td>Jungle</td>
                         <td>Wetlands</td>
                     </tr>
@@ -48,17 +66,24 @@
                     <tbody style="vertical-align: bottom;">
                     <tr>
                         <td>Increasing</td>
-                        <td><input type="checkbox" aria-label="label" regime="Desert_regime" class="checkbox" id="Desert_important_up"></td>
-                        <td><input type="checkbox" aria-label="label" regime="Plains_regime" class="checkbox" id="Plains_important_up"></td>
-                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="checkbox" id="Jungle_important_up"></td>
-                        <td><input type="checkbox" aria-label="label" regime="Wetlands_regime" class="checkbox" id="Wetlands_important_up"></td>
+                        <td><input type="checkbox" disabled aria-label="label" regime="Desert_regime" class="r_checkbox" id="Desert_important_up"></td>
+                        <td><input type="checkbox" disabled aria-label="label" regime="Plains_regime" class="r_checkbox" id="Plains_important_up"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="r_checkbox" id="Jungle_important_up"></td>
+                        <td><input type="checkbox" disabled aria-label="label" regime="Wetlands_regime" class="r_checkbox" id="Wetlands_important_up"></td>
                     </tr>
                     <tr>
                         <td>Decreasing</td>
-                        <td><input type="checkbox" aria-label="label" regime="Desert_regime" class="checkbox" id="Desert_important_down"></td>
-                        <td><input type="checkbox" aria-label="label" regime="Plains_regime" class="checkbox" id="Plains_important_down"></td>
-                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="checkbox" id="Jungle_important_down"></td>
-                        <td><input type="checkbox" aria-label="label" regime="Wetlands_regime" class="checkbox" id="Wetlands_important_down"></td>
+                        <td><input type="checkbox" disabled aria-label="label" regime="Desert_regime" class="r_checkbox" id="Desert_important_down"></td>
+                        <td><input type="checkbox" disabled aria-label="label" regime="Plains_regime" class="r_checkbox" id="Plains_important_down"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="r_checkbox" id="Jungle_important_down"></td>
+                        <td><input type="checkbox" disabled aria-label="label" regime="Wetlands_regime" class="r_checkbox" id="Wetlands_important_down"></td>
+                    </tr>
+                    <tr>
+                        <td>Raining</td>
+                        <td><input type="checkbox" aria-label="label" regime="Desert_regime" class="w_checkbox" id="Desert_Raining"></td>
+                        <td><input type="checkbox" aria-label="label" regime="Plains_regime" class="w_checkbox" id="Plains_Raining"></td>
+                        <td><input type="checkbox" checked aria-label="label" regime="Jungle_regime" class="w_checkbox" id="Jungle_Raining"></td>
+                        <td><input type="checkbox" aria-label="label" regime="Wetlands_regime" class="w_checkbox" id="Wetlands_Raining"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -93,7 +118,7 @@
                         <!--</div>-->
                     <!--</div>-->
                     <video id="globalView" autoplay="autoplay">
-                        <source src="https://s3.amazonaws.com/essil-hdp/videos/hdp_test2.mp4" type="video/mp4">
+                        <source src="https://s3.amazonaws.com/essil-hdp/videos/hdp_test10.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
