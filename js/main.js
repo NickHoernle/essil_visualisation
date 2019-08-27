@@ -50,6 +50,7 @@ function get_time_string(seconds) {
 d3.csv("data/input_file.csv", function(error, data) {
 
     var mapped_data = data.map(function(d) {
+        console.log(d)
         var dte = new Date(2014, 4, 1);
         var u = +dte;
         var seconds = parseInt(d.seconds);
@@ -96,6 +97,7 @@ d3.csv("data/input_file.csv", function(error, data) {
         datapoint.Jungle_regime = +parseInt(d.Jungle_specific_regime);
         datapoint.Wetlands_regime = +parseInt(d.Wetlands_specific_regime);
 
+        console.log(datapoint)
         // PLANTS.forEach(function(plant) {
         //     LEVELS.forEach(function(level) {
         //         var value = plant.replace('Plants', level);

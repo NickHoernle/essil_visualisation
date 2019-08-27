@@ -154,12 +154,18 @@ class LineChart  {
         var raining = false;
         var override = false;
 
+        // debugger
+
         while (time < this.data.length-1) {
             var finished = false;
             time += 1;
 
             selected.forEach(function(x) {
-                if (this.data[start][regime_map[x]] != this.data[time][regime_map[x]]) {
+
+                var rain_biome = regime_map[x].replace('_regime', '_Raining');
+
+                if ((this.data[start][regime_map[x]] != this.data[time][regime_map[x]]) | (this.data[start][rain_biome] !=  this.data[time][rain_biome])) {
+                    
                     if (this.data[start][x] >= 1) {
                         finished = true;
                         if (x.includes('Raining')) {
@@ -175,11 +181,6 @@ class LineChart  {
                 }
                 if (this.data[start][x] >= 1) {
                     important = true;
-                }
-                if (this.data[time][regime_map[x].replace('_regime', '_Raining')] >= 1){
-                    if (selected.indexOf(regime_map[x].replace('_regime', '_Raining')) >= 0){
-                        raining = true;
-                    }
                 }
             }, this);
 
@@ -206,17 +207,13 @@ class LineChart  {
         });
 
         if (raining == true) {
-            // important = false;
+            important = true;
             class_ = '_raining'
         }
 
         if (important == true) {
             this.plotActiveRegion(ixs, moving, area_start, class_);
         }
-        // else {
-        //     var a_s = area_start == 0 ? 1 : area_start;
-        //     this.plotActiveRegion(ixs, moving, a_s, '_not_important');
-        // }
 
         return end_time;
     }
