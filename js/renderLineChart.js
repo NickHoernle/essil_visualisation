@@ -165,7 +165,7 @@ class LineChart  {
                 var rain_biome = regime_map[x].replace('_regime', '_Raining');
 
                 if ((this.data[start][regime_map[x]] != this.data[time][regime_map[x]]) | (this.data[start][rain_biome] !=  this.data[time][rain_biome])) {
-                    
+
                     if (this.data[start][x] >= 1) {
                         finished = true;
                         if (x.includes('Raining')) {
