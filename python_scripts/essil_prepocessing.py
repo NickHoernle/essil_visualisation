@@ -124,6 +124,8 @@ def filter_to_the_useful_columns(df,
 
     columns += [f'Plants_level{i}' for i in range(1,5)]
     columns += [f'Creatures_level{i}' for i in range(1,5)]
+    columns += [f'{biome}_Raining' for biome in BIOME_NAMES]
+    columns += [f'{biome}_Clouds' for biome in BIOME_NAMES]
 
     return df[columns]
 
@@ -135,7 +137,6 @@ def get_plant_data(df):
         df[biome.replace('_Water', '_') + 'Plants'] = df_
     return df
 
-import pdb
 def get_filtered_first_order(df, biomes, filter_window = 4//2):
 
     water = df[biomes].values
@@ -143,20 +144,22 @@ def get_filtered_first_order(df, biomes, filter_window = 4//2):
     xs = np.arange(0, water.shape[0])
 
     for i, water_signal in enumerate(water.T):
-        for j, item in enumerate(water_signal):
-
-            min_ix = np.max([0,j-filter_window])
-            max_ix = np.min([len(water_signal)-1, j+filter_window+1])
-
-            Y = water_signal[min_ix:max_ix][:,None]
-            X = xs[min_ix:max_ix,None]
-            X = np.concatenate([np.ones_like(X), X], axis=1)
-
-            beta0, beta1 = np.linalg.pinv((X.T.dot(X))).dot(X.T).dot(Y)[:,0]
-            water_[j,i] = beta1
+        # for j, item in enumerate(water_signal):
+        #
+        #     min_ix = np.max([0,j-filter_window])
+        #     max_ix = np.min([len(water_signal)-1, j+filter_window+1])
+        #
+        #     Y = water_signal[min_ix:max_ix][:,None]
+        #     X = xs[min_ix:max_ix,None]
+        #     X = np.concatenate([np.ones_like(X), X], axis=1)
+        #
+        #     beta0, beta1 = np.linalg.pinv((X.T.dot(X))).dot(X.T).dot(Y)[:,0]
+        #     water_[j,i] = beta1
+        water_[1:,i] = np.diff(np.round(water_signal, decimals=3))
+        water_[1:,i] = np.clip(water_[1:,i], np.percentile(water_[1:,i], 2.5), np.percentile(water_[1:,i],97.5))
 
     # # scale to be 90%
-    water_ = water_/np.percentile(water_, 95)
+    water_ = water_/np.percentile(water_, 90)
     return water_
 
 #-------------------------------------------------------------------------------
@@ -180,6 +183,46 @@ def mode_convolution(arr, window=5, dtype=np.int16):
         x[i] = stats.mode(arr[p:e])[0][0]
     return x
 
+def group_consecutives(vals, step=0):
+    """Return list of consecutive lists of numbers from vals (number list)."""
+    run = []
+    result = [run]
+    expect = None
+    for v in vals:
+        if (v == expect) or (expect is None):
+            run.append(v)
+        else:
+            run = [v]
+            result.append(run)
+        expect = v + step
+    return result
+
+def mode_convolution2(arr, theta, window=5, dtype=np.int16):
+
+    consecutives = group_consecutives(arr)
+    result = []
+
+    for i, group in enumerate(consecutives):
+        if i <= 1:
+            result.append(group)
+            continue
+        if i >= len(consecutives)-1:
+            result.append(group)
+            continue
+
+        if len(group) < window:
+            options = [consecutives[i-1], consecutives[i], consecutives[i+1]]
+            if np.argmax([[len(o) for o in options]]) == 1:
+                result.append(group)
+                continue
+
+            best_option = np.argmin([np.sum(np.abs(theta[options[0][0]]['A'] - theta[options[1][0]]['A'])), np.sum(np.abs(theta[options[2][0]]['A'] - theta[options[1][0]]['A']))])
+
+            result.append([options[best_option*2][0] for j in range(len(group))])
+        else:
+            result.append(group)
+    return np.array([r for sub in result for r in sub])
+
 def get_number_animals_and_plants(row, biome_name, level=-1, mapping=PLANT_MAPPING):
 
     text = row[biome_name].strip()
@@ -202,15 +245,15 @@ def get_number_animals_and_plants(row, biome_name, level=-1, mapping=PLANT_MAPPI
     return alive_counts
 
 def find_and_store_animals_and_plants(df):
-    df['Plants_level1'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',0,), axis=1) for b in BIOME_NAMES], axis=0)
-    df['Plants_level2'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',1,), axis=1) for b in BIOME_NAMES], axis=0)
-    df['Plants_level3'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',2,), axis=1) for b in BIOME_NAMES], axis=0)
-    df['Plants_level4'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',3,), axis=1) for b in BIOME_NAMES], axis=0)
+    df['Plants_level1'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',0,), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
+    df['Plants_level2'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',1,), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
+    df['Plants_level3'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',2,), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
+    df['Plants_level4'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_PlantIndex',3,), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
 
-    df['Creatures_level1'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',0,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0)
-    df['Creatures_level2'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',1,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0)
-    df['Creatures_level3'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',2,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0)
-    df['Creatures_level4'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',3,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0)
+    df['Creatures_level1'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',0,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
+    df['Creatures_level2'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',1,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
+    df['Creatures_level3'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',2,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
+    df['Creatures_level4'] = np.sum([df.apply(get_number_animals_and_plants, args=(f'{b}_CreatureIndex',3,CREATURE_MAPPING), axis=1) for b in BIOME_NAMES], axis=0).astype(int)
 
     return df
 
@@ -227,7 +270,7 @@ def load_essil_file(file_name):
     df = find_and_store_animals_and_plants(df)
     df = filter_to_the_useful_columns(df)
     df['Source_Water'] = df.Waterfall_Water + df.Floor_Water + df.Reservoir_Water + df.MountainValley_Water
-    
+    df = df.reset_index().rename(columns={'index': 'seconds'})
     return df
 
 # ------------------------------------------------------------------------------
