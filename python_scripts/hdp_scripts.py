@@ -154,7 +154,7 @@ class sicky_HDP_HMM:
             P(y1:T \mid z_{t-1}, \pi, \theta)
         '''
         messages = (log_pi + likeihood_fn.logpdf(obs) + m_tplus1)
-        return sp.misc.logsumexp(messages, axis=1)
+        return sp.special.logsumexp(messages, axis=1)
 
     def __backward_algorithm(self, Y, **kwargs):
         '''
@@ -186,7 +186,7 @@ class sicky_HDP_HMM:
 
             # evaluate the backward message for each time-step and each assignment for z
             bkwd_val = self.__backward_step(log_pi, yt, likelihood_fn, prev_bkwd)
-            prev_bkwd = bkwd_val - sp.misc.logsumexp(bkwd_val)
+            prev_bkwd = bkwd_val - sp.special.logsumexp(bkwd_val)
             bkwd[t] = prev_bkwd
             t -= 1
 
@@ -243,7 +243,7 @@ class sicky_HDP_HMM:
             prob_fk = self.__forward_step(self.log_pi[z_tmin1], yt, likelihood_fn, bkwdt)
 
             # (b) sample a new z_t
-            prob_fk -= sp.misc.logsumexp(prob_fk)
+            prob_fk -= sp.special.logsumexp(prob_fk)
             zt = np.random.choice(options, p=np.exp(prob_fk))
 
             # (c) increment n

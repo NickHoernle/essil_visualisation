@@ -8,8 +8,8 @@ import os
 from multiprocessing import Pool
 
 import numpy as np
-import pyhsmm
-import pyhsmm.basic.distributions as distributions
+# import pyhsmm
+# import pyhsmm.basic.distributions as distributions
 import hdp_scripts as hdp, essil_prepocessing as pre
 import classification_evaluation as hdp_eval
 import sys

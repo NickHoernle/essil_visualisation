@@ -7,6 +7,9 @@ import matplotlib.animation as animation
 import classification_evaluation as hdp_eval
 import sys
 
+plt.rcParams['animation.ffmpeg_path'] = '/usr/bin/ffmpeg' # Add the path of ffmpeg here!!
+
+
 # thanks to Aditi for the OpenCV code for processing the global view
 import opencv_utils
 
@@ -167,6 +170,9 @@ def process_global_vid(df, cap, out_file):
 
     ani = animation.FuncAnimation(fig, update_img, df.shape[0], interval=500)
     writer = animation.writers['ffmpeg'](fps=1)
-    ani.save(out_file, writer=writer)
+    # Writer = animation.writers['ffmpeg']
+    # writer = Writer(fps=1, metadata=dict(artist='Me'), bitrate=1800)
+
+    ani.save(out_file)
 
     cap.release()

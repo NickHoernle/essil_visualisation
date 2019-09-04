@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 import experiment_controller as expctrl
 import time
 import os
-import pyhsmm
-import pyhsmm.basic.distributions as distributions
+# import pyhsmm
+# import pyhsmm.basic.distributions as distributions
 import copy
 import json
 from scipy.signal import convolve
