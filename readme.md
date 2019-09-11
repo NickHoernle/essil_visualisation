@@ -21,7 +21,7 @@ Tested on `Ubuntu 18.04` and `MacOS Mojave`.
 Most of the required dependencies (except Open CV) come with the [Anaconda](https://www.anaconda.com/) distribution of python. Once you are using anaconda, setup a new virtual environment `essil` and install python 3.6
 ```
 conda create -n essil python=3.6 anaconda
-source active essil
+source activate essil
 ```
 
 You will then need to `pip install` the Open CV libarary that is use to read the global view video and do the processing to transfrom this video:
