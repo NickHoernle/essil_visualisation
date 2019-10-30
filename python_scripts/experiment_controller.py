@@ -153,7 +153,7 @@ def process_global_vid(df, cap, out_file):
 
     add_annotations(ax, fontSize, textCol)
 
-    fig.set_size_inches([5,5])
+    fig.set_size_inches([4,5.5])
 
     pl.tight_layout()
 
@@ -168,7 +168,8 @@ def process_global_vid(df, cap, out_file):
 
         return im
 
-    ani = animation.FuncAnimation(fig, update_img, df.shape[0], interval=500)
+    length = int(df._video_seconds.max())
+    ani = animation.FuncAnimation(fig, update_img, length, interval=500)
     writer = animation.writers['ffmpeg'](fps=1)
     # Writer = animation.writers['ffmpeg']
     # writer = Writer(fps=1, metadata=dict(artist='Me'), bitrate=1800)
