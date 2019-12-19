@@ -1087,6 +1087,13 @@ if __name__ == '__main__':
     # to_save = df.iloc[df._video_seconds].ffill()
     to_save = df
 
+    # fix the rain / interesting overlap here.
+    for i, b in enumerate(pre.BIOME_NAMES):
+        to_save['interesting_upper_' + b][to_save[b + '_Raining'] == 1] = 0
+        to_save['interesting_lower_' + b][to_save[b + '_Raining'] == 1] = 0
+        to_save[b + '_specific_regime'][to_save[b + '_Raining'] == 1] = 10
+        to_save['theta_' + b][to_save[b + '_Raining'] == 1] = 0
+
     to_save[
         ['seconds', '_video_seconds', 'Desert_Water', 'Plains_Water', 'Jungle_Water', 'Wetlands_Water',
          'Desert_Plants', 'Plains_Plants', 'Jungle_Plants', 'Wetlands_Plants', 'Desert_Raining',
